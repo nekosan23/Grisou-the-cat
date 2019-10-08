@@ -195,6 +195,29 @@ Public Class MainWin
                     MsgBox("Grisou cannot have defense this must be a mistake in the code please contact the developer")
                 End If
             Case "Recovery"
+                'player casted recovery
+                If (Target = 1) Then
+                    PlayerHealth += DataValue
+                    'checking if progressbar can be updated without Integer Overflow
+                    If (PlayerHealth < 50) Then
+                        PlayerHealthBar.Value = 50
+                        PlayerText2.Text = PlayerHealth.ToString + " / 50"
+                    Else
+                        PlayerHealthBar.Value = PlayerHealth
+                        PlayerText2.Text = PlayerHealth.ToString + " / 50"
+                    End If
+                    'grisou casted recovery
+                ElseIf (Target = 2) Then
+                    GrisouHealth += DataValue
+                    'checking if progressbar can be updated without Integer Overflow
+                    If (GrisouHealth < 50) Then
+                        GrisouHealthBar.Value = 50
+                        GrisouText2.Text = GrisouHealth.ToString + " / 50"
+                    Else
+                        GrisouHealthBar.Value = GrisouHealth
+                        GrisouText2.Text = GrisouHealth.ToString + " / 50"
+                    End If
+                End If
         End Select
     End Sub
     'game over call this whenever somebody die
