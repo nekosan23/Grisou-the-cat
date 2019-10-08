@@ -1,6 +1,6 @@
 ﻿Imports System.Threading.Thread
 Public Class MainWin
-    Public GrisouHealth, PlayerHealth, GrisouRoundDefense, PlayerRoundDefense As Integer
+    Public GrisouHealth, PlayerHealth, PlayerRoundDefense As Integer
     Public GameState As Boolean
     Public GrisouTextA, PlayerTextA As String
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -148,8 +148,22 @@ Public Class MainWin
                         'Game over
                         Gameover(1)
                     Else
-                        'apply attack damage
-                        PlayerHealth -= DataValue
+                        'check the defense
+                        If (PlayerRoundDefense < 0) Then
+                            Container2 = DataValue - PlayerRoundDefense
+                            'player has defense so calculation
+                            If (Container2 >= 0) Then
+                                'defense canceled the attack
+                                Task.WaitAll(Announcer("Your defense was high enough to cancel grisou attack"))
+                            Else
+                                'player doesn't have enough defense
+                                PlayerHealth -= Container2
+                            End If
+                        Else
+                            'player has no defense
+                            PlayerHealth -= DataValue
+                        End If
+                        'checking if life bar can be updated
                         If (PlayerHealth >= 50) Then
                             PlayerHealthBar.Value = PlayerHealth
                             PlayerText2.Text = PlayerHealth.ToString + " / 50"
@@ -164,12 +178,14 @@ Public Class MainWin
                     Else
                         'apply attack damage
                         GrisouHealth -= DataValue
+                        'checking if life bar can be updated
                         If (GrisouHealth >= 50) Then
                             GrisouHealthBar.Value = GrisouHealth
                             GrisouText2.Text = GrisouHealth.ToString + " / 50"
                         End If
                     End If
                 End If
+            'calculation for defense
             Case "Defense"
             Case "Recovery"
         End Select
