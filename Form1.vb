@@ -48,7 +48,6 @@ Public Class MainWin
             PlayerAction2.Enabled = True
             PlayerAction3.Enabled = True
             Task.WaitAll(Announcer(PlayerTextA))
-
         ElseIf (TurnValue = 2) Then
             'Grisou is starting
             PlayerAction1.Enabled = False
