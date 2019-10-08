@@ -121,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="note.txt" />
-    <Content Include="project de merde a sam.txt" />
     <None Include="Resources\IMG_0233.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

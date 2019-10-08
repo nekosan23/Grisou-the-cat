@@ -1,16 +1,4 @@
-﻿start 50 hp both
-
-attack system:
-
-random 1 to 4 (miss, low, med, high)
-random array 1 to 4
-
-recovery system:
-
-ces un skill
-valeur un array random(5, 10, 15, 18)
-
-defense:
+﻿defense:
 take up whole round
 add up defense from array (6, 8, 12, 14)
 val = mainttack - defense
@@ -26,3 +14,5 @@ rand(1,2) 1 player 2 grisou
 grisou available move
 attack
 recover
+
+Make sure that grisou is force to attack when player cast defense
