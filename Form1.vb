@@ -47,13 +47,14 @@ Public Class MainWin
             PlayerAction1.Enabled = True
             PlayerAction2.Enabled = True
             PlayerAction3.Enabled = True
-            Announcer(PlayerTextA)
+            Task.WaitAll(Announcer(PlayerTextA))
+
         ElseIf (TurnValue = 2) Then
             'Grisou is starting
             PlayerAction1.Enabled = False
             PlayerAction2.Enabled = False
             PlayerAction3.Enabled = False
-            Announcer(GrisouTextA)
+            Task.WaitAll(Announcer(GrisouTextA))
         End If
     End Sub
     'Grisou AI yes we made a cat intelligent
@@ -74,38 +75,38 @@ Public Class MainWin
             Case 1
                 'Hit or miss i guess they never miss humm
                 If (user = 1) Then
-                    Announcer("Your attack missed")
+                    Task.WaitAll(Announcer("Your attack missed"))
                 Else
-                    Announcer("Grisou attack missed")
+                    Task.WaitAll(Announcer("Grisou attack missed"))
                 End If
             Case 2
                 'Low
                 Container1 = GetRandom(1, 4)
                 If (user = 1) Then
-                    Announcer("Your attack did " + AttackLow(Container1) + " damage")
+                    Task.WaitAll(Announcer("Your attack did " + AttackLow(Container1) + " damage"))
                     DataProcess(2, "Attack", AttackLow(Container1))
                 Else
-                    Announcer("Grisou attack did " + AttackLow(Container1) + " damage")
+                    Task.WaitAll(Announcer("Grisou attack did " + AttackLow(Container1) + " damage"))
                     DataProcess(1, "Attack", AttackLow(Container1))
                 End If
             Case 3
                 'Medium
                 Container1 = GetRandom(1, 4)
                 If (user = 1) Then
-                    Announcer("Your attack did " + AttackMedium(Container1) + " damage")
+                    Task.WaitAll(Announcer("Your attack did " + AttackMedium(Container1) + " damage"))
                     DataProcess(2, "Attack", AttackMedium(Container1))
                 Else
-                    Announcer("Grisou attack did " + AttackMedium(Container1) + " damage")
+                    Task.WaitAll(Announcer("Grisou attack did " + AttackMedium(Container1) + " damage"))
                     DataProcess(1, "Attack", AttackMedium(Container1))
                 End If
             Case 4
                 'High
                 Container1 = GetRandom(1, 4)
                 If (user = 1) Then
-                    Announcer("Your attack did " + AttackHigh(Container1) + " damage")
+                    Task.WaitAll(Announcer("Your attack did " + AttackHigh(Container1) + " damage"))
                     DataProcess(2, "Attack", AttackHigh(Container1))
                 Else
-                    Announcer("Grisou attack did " + AttackHigh(Container1) + " damage")
+                    Task.WaitAll(Announcer("Grisou attack did " + AttackHigh(Container1) + " damage"))
                     DataProcess(1, "Attack", AttackHigh(Container1))
                 End If
         End Select
@@ -115,8 +116,8 @@ Public Class MainWin
         Static Dim Defense = New Integer() {6, 8, 12, 14}
         Static Dim Container1 As Integer
         Container1 = GetRandom(1, 4)
-        Announcer("You casted defense and got " + Defense(Container1) + " defense for this turn")
-            DataProcess(1, "Defense", Defense(Container1))
+        Task.WaitAll(Announcer("You casted defense and got " + Defense(Container1) + " defense for this turn"))
+        DataProcess(1, "Defense", Defense(Container1))
     End Sub
     'Recovery System cast every recovery never forget to mention the user casting
     Public Sub Recovery(ByVal user As Integer)
@@ -124,10 +125,10 @@ Public Class MainWin
         Static Dim container1 As Integer
         container1 = GetRandom(1, 4)
         If (user = 1) Then
-            Announcer("You casted recovery and recovered " + Recovery(container1) + " HP")
+            Task.WaitAll(Announcer("You casted recovery and recovered " + Recovery(container1) + " HP"))
             DataProcess(1, "Recovery", Recovery(container1))
         Else
-            Announcer("Grisou casted recovery and recovered " + Recovery(container1) + " HP")
+            Task.WaitAll(Announcer("Grisou casted recovery and recovered " + Recovery(container1) + " HP"))
             DataProcess(2, "Recovery", Recovery(container1))
         End If
     End Sub
@@ -138,7 +139,7 @@ Public Class MainWin
 
     End Sub
     'Announcer
-    Public Sub Announcer(text As String) '294
+    Public Async Function Announcer(text As String) As Task
         Dim animationcountdown As Integer = -490
         AnnouncerText.Text = text
         AnnouncerText.Visible = True
@@ -152,7 +153,7 @@ Public Class MainWin
         Sleep(3000)
         AnnouncerText.Visible = False
         AnnouncerPanel.Visible = False
-    End Sub
+    End Function
     'Random Generator for integer
     Public Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer
         Static Generator As System.Random = New System.Random
