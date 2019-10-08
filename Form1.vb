@@ -187,6 +187,13 @@ Public Class MainWin
                 End If
             'calculation for defense
             Case "Defense"
+                'Defense can only be casted by player but we're doing it to be safe
+                If (Target = 1) Then
+                    PlayerRoundDefense = 0
+                    PlayerRoundDefense = DataValue
+                Else
+                    MsgBox("Grisou cannot have defense this must be a mistake in the code please contact the developer")
+                End If
             Case "Recovery"
         End Select
     End Sub
