@@ -111,17 +111,12 @@ Public Class MainWin
         End Select
     End Sub
     'Defense System cast every defense never forget to mention the user casting
-    Public Sub Defense(ByVal user As Integer)
+    Public Sub Defense()
         Static Dim Defense = New Integer() {6, 8, 12, 14}
         Static Dim Container1 As Integer
         Container1 = GetRandom(1, 4)
-        If (user = 1) Then
-            Announcer("You casted defense and got " + Defense(Container1) + " defense for this turn")
+        Announcer("You casted defense and got " + Defense(Container1) + " defense for this turn")
             DataProcess(1, "Defense", Defense(Container1))
-        Else
-            Announcer("Grisou casted defense and got " + Defense(Container1) + " defense for this turn")
-            DataProcess(2, "Defense", Defense(Container1))
-        End If
     End Sub
     'Recovery System cast every recovery never forget to mention the user casting
     Public Sub Recovery(ByVal user As Integer)
