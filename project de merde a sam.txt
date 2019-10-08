@@ -1,0 +1,109 @@
+﻿
+Grisou the Cat : A random number game!
+
+(to do on programing)
+
+SYSTEMS
+
+--------------------------------------------
+HP System
+Number System
+Animation of damages
+--------------------------------------------
+
+PICTURES
+
+--------------------------------------------
+Picture
+0 : nothing...
+1 to 50 number(Health, Def, Atk, Rcy)
+Specials attack picture??
+--------------------------------------------
+
+ATTACK
+
+--------------------------------------------
+Max Health Point or HP : 50
+Nothing : 0
+Low attack : 1, 2, 3, 4, 
+Medium attack : 7, 9, 11, 13
+Powerfull attack : 16, 17, 19, 20
+
+Recovery* : 5, 10, 15, 18
+Defense** : 6, 8, 12, 14
+--------------------------------------------
+
+* : Recevery number is only number of health you can get. 
+Exemple: You have 50 HP and opponent attack you with Powerfull attack 20, you take 20HP 
+of damage, then your are now with 30HP remaining.
+Now its your turn and you get a Recovery number 5, then your are to 30HP + Recovery number you have.
+Recevery number 5 then 30HP + RCY 5 = 35HP remening.
+Recevery number 10 then 30HP + RCY 10 = 40HP.
+Recevery number 15 then 30HP + RCY 15 = 45HP.
+Recevery number 18 then 30HP + RCY 18 = 48HP.
+
+EXCEPTION!!
+If the number of Health Point is higher 50HP then its add it.
+Exemple : You have nom 40HP remaining and you get a Recevery Number 15 then it is 40HP + 15HN then you are now with 55HP.
+
+
+** : Defense point protect you to the opponent turn.
+You get a defense number 6. Its the opponent turn. Its get a low attack 4 and you protect with your Defesce point 6, you get no damage.
+IF its take a higher number than you, you get damage BUT only you take the diference of attack. 
+Exemple : You get a defense number 6 in your turn. Then now its opponent turn and its take a Attaque number 11. Then you
+take only 5 points of attack. Then you are now with 45 Health points instead then 39HP.
+Higher is your defense, better is your defense.
+
+-------------------------------------------
+
+How to play?
+
+-------------------------------------------
+
+You can play 2 or more. To know who begin, the one have the higher number begin.
+You and your opponent have all 50 Health Points, naming otherwise HP.
+You have 3 attacks level. Low, Medium and Powerfull.
+You have some 4 Recevery number and Defense number or naming HN and DN.
+Each player have one only number by turn. They are to 0 to 20.
+
+***Game board***
+
+With pieces of paper, write on all of these 0 to 20.
+Mix them and put it somewhere, in a bottle or something like it.
+Each turn you pick only one pieces of paper and after you show it to your
+opponent you choose. All are explain better about those lower.
+
+
+
+
+There these number and them function :
+
+
+Attack : 
+	Low : 1 to 4
+	Medium : 7, 9, 11, 13
+	Powerfull : 16, 17, 19, 20
+
+	Recovery : 5, 10, 15, 18
+	Defense : 6, 8, 12, 14
+
+
+You get a random number and you play it. 
+If you get a Attack number(ATK), then you need to attack someone.
+If you get a Defense number(DEF), then it turn of your opponent
+and you play your number in this turn if you are attacking. If its not playing its end
+the turn and its next turn.
+If you get a Recovery number(RCY) then you immediately it, same if you are more than
+50Health points. Its add Recovery number on the 50HP. Then it next turn.
+
+HOW TO END THE GAME
+
+
+To win you need to defeat your opponent. When your opponent is to 0 Health point or less
+you win.
+If you play more than 2 player you can continu until everyone are defeat.
+
+
+
+
+______________________________________________________________________________________________________________________________________________

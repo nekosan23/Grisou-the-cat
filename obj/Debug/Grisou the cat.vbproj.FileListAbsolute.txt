@@ -1,0 +1,11 @@
+C:\Users\Utilisateur\source\repos\WindowsApp2\bin\Debug\Grisou the cat.exe.config
+C:\Users\Utilisateur\source\repos\WindowsApp2\bin\Debug\Grisou the cat.exe
+C:\Users\Utilisateur\source\repos\WindowsApp2\bin\Debug\Grisou the cat.pdb
+C:\Users\Utilisateur\source\repos\WindowsApp2\bin\Debug\Grisou the cat.xml
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\Grisou the cat.vbprojAssemblyReference.cache
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\WindowsApp2.MainWin.resources
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\WindowsApp2.Resources.resources
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\Grisou the cat.vbproj.GenerateResource.cache
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\Grisou the cat.exe
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\Grisou the cat.xml
+C:\Users\Utilisateur\source\repos\WindowsApp2\obj\Debug\Grisou the cat.pdb
