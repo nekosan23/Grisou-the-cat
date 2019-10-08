@@ -123,6 +123,19 @@ Public Class MainWin
             DataProcess(2, "Defense", Defense(Container1))
         End If
     End Sub
+    'Recovery System cast every recovery never forget to mention the user casting
+    Public Sub Recovery(ByVal user As Integer)
+        Static Dim Recovery = New Integer() {5, 10, 15, 18}
+        Static Dim container1 As Integer
+        container1 = GetRandom(1, 4)
+        If (user = 1) Then
+            Announcer("You casted recovery and recovered " + Recovery(container1) + " HP")
+            DataProcess(1, "Recovery", Recovery(container1))
+        Else
+            Announcer("Grisou casted recovery and recovered " + Recovery(container1) + " HP")
+            DataProcess(2, "Recovery", Recovery(container1))
+        End If
+    End Sub
     'Data Processer
     'target list    1 player    2 grisou
     'DataType   Attack  Defense  Recovery
