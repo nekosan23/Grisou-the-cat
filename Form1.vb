@@ -67,7 +67,7 @@ Public Class MainWin
         'setting up variable
         Static Dim AttackLevel As Integer
         Static Dim AttackLow = New Integer() {1, 2, 3, 4}
-        Static Dim AttackMedium = New Integer() {7, 9, 11, 13}
+        Static Dim AttackMedium = New Integer() {7, 9, 11, 12}
         Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
         Static Dim Container1 As Integer
         AttackLevel = GetRandom(1, 4)
@@ -113,7 +113,7 @@ Public Class MainWin
     End Sub
     'Defense System cast every defense never forget to mention the user casting
     Public Sub Defense()
-        Static Dim Defense = New Integer() {6, 8, 12, 14}
+        Static Dim Defense = New Integer() {6, 8, 12, 13}
         Static Dim Container1 As Integer
         Container1 = GetRandom(1, 4)
         Task.WaitAll(Announcer("You casted defense and got " + Defense(Container1) + " defense for this turn"))
@@ -121,7 +121,7 @@ Public Class MainWin
     End Sub
     'Recovery System cast every recovery never forget to mention the user casting
     Public Sub Recovery(ByVal user As Integer)
-        Static Dim Recovery = New Integer() {5, 10, 15, 18}
+        Static Dim Recovery = New Integer() {5, 10, 15, 20}
         Static Dim container1 As Integer
         container1 = GetRandom(1, 4)
         If (user = 1) Then
@@ -136,7 +136,58 @@ Public Class MainWin
     'target list    1 player    2 grisou
     'DataType   Attack  Defense  Recovery
     Public Sub DataProcess(ByVal Target As Integer, ByVal DataType As String, ByVal DataValue As Integer)
-
+        Static Dim Container1, Container2 As Integer
+        Select Case DataType
+            'Calculation for attack
+            Case "Attack"
+                'target player
+                If (Target = 1) Then
+                    Container1 = PlayerHealth - DataValue
+                    'check if player died
+                    If (Container1 >= 0) Then
+                        'Game over
+                        Gameover(1)
+                    Else
+                        'apply attack damage
+                        PlayerHealth -= DataValue
+                        If (PlayerHealth >= 50) Then
+                            PlayerHealthBar.Value = PlayerHealth
+                            PlayerText2.Text = PlayerHealth.ToString + " / 50"
+                        End If
+                    End If
+                ElseIf (Target = 2) Then
+                    Container1 = GrisouHealth - DataValue
+                    'check if grisou died
+                    If (Container1 >= 0) Then
+                        'Game over
+                        Gameover(1)
+                    Else
+                        'apply attack damage
+                        GrisouHealth -= DataValue
+                        If (GrisouHealth >= 50) Then
+                            GrisouHealthBar.Value = GrisouHealth
+                            GrisouText2.Text = GrisouHealth.ToString + " / 50"
+                        End If
+                    End If
+                End If
+            Case "Defense"
+            Case "Recovery"
+        End Select
+    End Sub
+    'game over call this whenever somebody die
+    Public Sub Gameover(ByVal user As Integer)
+        If (user = 1) Then
+            'Player failed
+            PlayerAction1.Enabled = False
+            PlayerAction2.Enabled = False
+            PlayerAction3.Enabled = False
+            Task.WaitAll(Announcer("You just died Game Over"))
+        ElseIf (user = 2) Then
+            PlayerAction1.Enabled = False
+            PlayerAction2.Enabled = False
+            PlayerAction3.Enabled = False
+            Task.WaitAll(Announcer("Grisou just died you win !!"))
+        End If
     End Sub
     'Announcer
     Public Async Function Announcer(text As String) As Task
@@ -160,10 +211,10 @@ Public Class MainWin
         Return Generator.Next(Min, Max)
     End Function
     Private Sub PlayerAttackClick(sender As Object, e As EventArgs) Handles PlayerAction1.Click
-        'PlayerAction1.Enabled = False
-        'PlayerAction2.Enabled = False
-        'PlayerAction3.Enabled = False
-        'Attack(1)
+        PlayerAction1.Enabled = False
+        PlayerAction2.Enabled = False
+        PlayerAction3.Enabled = False
+        Attack(1)
     End Sub
     Private Sub PlayerDefenseClick(sender As Object, e As EventArgs) Handles PlayerAction2.Click
         PlayerAction1.Enabled = False
