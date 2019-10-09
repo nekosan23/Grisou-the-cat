@@ -19,7 +19,7 @@ Public Class MainWin
         AnnouncerPanel.Visible = False
         AnnouncerText.Visible = False
         GameState = True
-        'Round()
+        Round()
     End Sub
     'Round system need to be active at any time or else game break
     Public Sub Round()
@@ -39,7 +39,7 @@ Public Class MainWin
                 TurnValue = 1
             End If
         Else
-                MsgBox("GameState is not found")
+            MsgBox("GameState is not found")
         End If
         'Checking who's turn it is
         If (TurnValue = 1) Then
@@ -54,6 +54,7 @@ Public Class MainWin
             PlayerAction2.Enabled = False
             PlayerAction3.Enabled = False
             Task.WaitAll(Announcer(GrisouTextA))
+            GrisouAI()
         End If
     End Sub
     'Grisou AI yes we made a cat intelligent
