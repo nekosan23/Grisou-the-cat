@@ -6,12 +6,12 @@ Public Class MainWin
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
         GrisouHealth = 50
         PlayerHealth = 50
-        'Setting up Grisou 
+        'Setting up Grisou text
         GrisouHealthBar.Value = GrisouHealth
         GrisouText1.Text = "Grisou"
         GrisouText2.Text = GrisouHealth.ToString + " / 50"
         GrisouTextA = "Grisou Turn !"
-        'Setting up Player
+        'Setting up Player text
         PlayerHealthBar.Value = PlayerHealth
         PlayerText1.Text = "Sam"
         PlayerText2.Text = PlayerHealth.ToString + " / 50"
@@ -44,15 +44,11 @@ Public Class MainWin
         'Checking who's turn it is
         If (TurnValue = 1) Then
             'player is starting
-            PlayerAction1.Enabled = True
-            PlayerAction2.Enabled = True
-            PlayerAction3.Enabled = True
+            EnablePlayerButton()
             Task.WaitAll(Announcer(PlayerTextA))
         ElseIf (TurnValue = 2) Then
             'Grisou is starting
-            PlayerAction1.Enabled = False
-            PlayerAction2.Enabled = False
-            PlayerAction3.Enabled = False
+            DisablePlayerButton()
             Task.WaitAll(Announcer(GrisouTextA))
             GrisouAI()
         End If
@@ -83,30 +79,30 @@ Public Class MainWin
                 'Low
                 Container1 = GetRandom(1, 4)
                 If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack did " + AttackLow(Container1) + " damage"))
+                    Task.WaitAll(Announcer("Your attack did " + AttackLow(Container1).ToString + " damage"))
                     DataProcess(2, "Attack", AttackLow(Container1))
                 Else
-                    Task.WaitAll(Announcer("Grisou attack did " + AttackLow(Container1) + " damage"))
+                    Task.WaitAll(Announcer("Grisou attack did " + AttackLow(Container1).ToString + " damage"))
                     DataProcess(1, "Attack", AttackLow(Container1))
                 End If
             Case 3
                 'Medium
                 Container1 = GetRandom(1, 4)
                 If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack did " + AttackMedium(Container1) + " damage"))
+                    Task.WaitAll(Announcer("Your attack did " + AttackMedium(Container1).ToString + " damage"))
                     DataProcess(2, "Attack", AttackMedium(Container1))
                 Else
-                    Task.WaitAll(Announcer("Grisou attack did " + AttackMedium(Container1) + " damage"))
+                    Task.WaitAll(Announcer("Grisou attack did " + AttackMedium(Container1).ToString + " damage"))
                     DataProcess(1, "Attack", AttackMedium(Container1))
                 End If
             Case 4
                 'High
                 Container1 = GetRandom(1, 4)
                 If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack did " + AttackHigh(Container1) + " damage"))
+                    Task.WaitAll(Announcer("Your attack did " + AttackHigh(Container1).ToString + " damage"))
                     DataProcess(2, "Attack", AttackHigh(Container1))
                 Else
-                    Task.WaitAll(Announcer("Grisou attack did " + AttackHigh(Container1) + " damage"))
+                    Task.WaitAll(Announcer("Grisou attack did " + AttackHigh(Container1).ToString + " damage"))
                     DataProcess(1, "Attack", AttackHigh(Container1))
                 End If
         End Select
@@ -273,5 +269,16 @@ Public Class MainWin
         PlayerAction2.Enabled = False
         PlayerAction3.Enabled = False
         'recover(1)
+    End Sub
+    'Below is fast code for saving space
+    Public Sub DisablePlayerButton()
+        MainWin.PlayerAction1.Enabled = False
+        MainWin.PlayerAction2.Enabled = False
+        MainWin.PlayerAction3.Enabled = False
+    End Sub
+    Public Sub EnablePlayerButton()
+        MainWin.PlayerAction1.Enabled = True
+        MainWin.PlayerAction1.Enabled = True
+        MainWin.PlayerAction1.Enabled = True
     End Sub
 End Class
