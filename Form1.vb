@@ -272,13 +272,13 @@ Public Class MainWin
     End Sub
     'Below is fast code for saving space
     Public Sub DisablePlayerButton()
-        MainWin.PlayerAction1.Enabled = False
-        MainWin.PlayerAction2.Enabled = False
-        MainWin.PlayerAction3.Enabled = False
+        PlayerAction1.Enabled = False
+        PlayerAction2.Enabled = False
+        PlayerAction3.Enabled = False
     End Sub
     Public Sub EnablePlayerButton()
-        MainWin.PlayerAction1.Enabled = True
-        MainWin.PlayerAction1.Enabled = True
-        MainWin.PlayerAction1.Enabled = True
+        PlayerAction1.Enabled = True
+        PlayerAction1.Enabled = True
+        PlayerAction1.Enabled = True
     End Sub
 End Class
