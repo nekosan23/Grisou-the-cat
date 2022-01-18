@@ -140,7 +140,7 @@ Public Class MainWin
                 If (Target = 1) Then
                     Container1 = PlayerHealth - DataValue
                     'check if player died
-                    If (Container1 >= 0) Then
+                    If (Container1 <= 0) Then
                         'Game over
                         Gameover(1)
                     Else
@@ -168,7 +168,7 @@ Public Class MainWin
                 ElseIf (Target = 2) Then
                     Container1 = GrisouHealth - DataValue
                     'check if grisou died
-                    If (Container1 >= 0) Then
+                    If (Container1 <= 0) Then
                         'Game over
                         Gameover(1)
                     Else
@@ -268,7 +268,7 @@ Public Class MainWin
     End Sub
     Public Sub EnablePlayerButton()
         PlayerAction1.Enabled = True
-        PlayerAction1.Enabled = True
-        PlayerAction1.Enabled = True
+        PlayerAction2.Enabled = True
+        PlayerAction3.Enabled = True
     End Sub
 End Class

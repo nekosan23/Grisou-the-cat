@@ -33,3 +33,16 @@ E:\pc\desktop\Grisou-the-cat-master\Grisou-the-cat-master\obj\Debug\Grisou the c
 E:\pc\desktop\Grisou-the-cat-master\Grisou-the-cat-master\obj\Debug\Grisou the cat.exe
 E:\pc\desktop\Grisou-the-cat-master\Grisou-the-cat-master\obj\Debug\Grisou the cat.xml
 E:\pc\desktop\Grisou-the-cat-master\Grisou-the-cat-master\obj\Debug\Grisou the cat.pdb
+E:\pc\desktop\grisou\Grisou-the-cat\bin\Debug\Grisou the cat.exe.config
+E:\pc\desktop\grisou\Grisou-the-cat\bin\Debug\Grisou the cat.exe
+E:\pc\desktop\grisou\Grisou-the-cat\bin\Debug\Grisou the cat.pdb
+E:\pc\desktop\grisou\Grisou-the-cat\bin\Debug\Grisou the cat.xml
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.AssemblyReference.cache
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.SuggestedBindingRedirects.cache
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\WindowsApp2.MainWin.resources
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\WindowsApp2.Resources.resources
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.GenerateResource.cache
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.CoreCompileInputs.cache
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.exe
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.xml
+E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.pdb
