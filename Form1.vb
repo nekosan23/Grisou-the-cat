@@ -112,7 +112,7 @@ Public Class MainWin
         Static Dim Defense = New Integer() {6, 8, 12, 13}
         Static Dim Container1 As Integer
         Container1 = GetRandom(1, 4)
-        Task.WaitAll(Announcer("You casted defense and got " + Defense(Container1) + " defense for this turn"))
+        Task.WaitAll(Announcer("You casted defense and got " + Defense(Container1).ToString + " defense for this turn"))
         DataProcess(1, "Defense", Defense(Container1))
     End Sub
     'Recovery System cast every recovery never forget to mention the user casting
@@ -121,10 +121,10 @@ Public Class MainWin
         Static Dim container1 As Integer
         container1 = GetRandom(1, 4)
         If (user = 1) Then
-            Task.WaitAll(Announcer("You casted recovery and recovered " + Recovery(container1) + " HP"))
+            Task.WaitAll(Announcer("You casted recovery and recovered " + Recovery(container1).ToString + " HP"))
             DataProcess(1, "Recovery", Recovery(container1))
         Else
-            Task.WaitAll(Announcer("Grisou casted recovery and recovered " + Recovery(container1) + " HP"))
+            Task.WaitAll(Announcer("Grisou casted recovery and recovered " + Recovery(container1).ToString + " HP"))
             DataProcess(2, "Recovery", Recovery(container1))
         End If
     End Sub
