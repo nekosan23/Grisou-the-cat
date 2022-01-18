@@ -220,14 +220,10 @@ Public Class MainWin
     Public Sub Gameover(ByVal user As Integer)
         If (user = 1) Then
             'Player failed
-            PlayerAction1.Enabled = False
-            PlayerAction2.Enabled = False
-            PlayerAction3.Enabled = False
+            DisablePlayerButton()
             Task.WaitAll(Announcer("You just died Game Over"))
         ElseIf (user = 2) Then
-            PlayerAction1.Enabled = False
-            PlayerAction2.Enabled = False
-            PlayerAction3.Enabled = False
+            EnablePlayerButton()
             Task.WaitAll(Announcer("Grisou just died you win !!"))
         End If
     End Sub
@@ -253,21 +249,15 @@ Public Class MainWin
         Return Generator.Next(Min, Max)
     End Function
     Private Sub PlayerAttackClick(sender As Object, e As EventArgs) Handles PlayerAction1.Click
-        PlayerAction1.Enabled = False
-        PlayerAction2.Enabled = False
-        PlayerAction3.Enabled = False
+        DisablePlayerButton()
         Attack(1)
     End Sub
     Private Sub PlayerDefenseClick(sender As Object, e As EventArgs) Handles PlayerAction2.Click
-        PlayerAction1.Enabled = False
-        PlayerAction2.Enabled = False
-        PlayerAction3.Enabled = False
+        DisablePlayerButton()
         'defense(1)
     End Sub
     Private Sub PlayerRecoverClick(sender As Object, e As EventArgs) Handles PlayerAction3.Click
-        PlayerAction1.Enabled = False
-        PlayerAction2.Enabled = False
-        PlayerAction3.Enabled = False
+        DisablePlayerButton()
         'recover(1)
     End Sub
     'Below is fast code for saving space
