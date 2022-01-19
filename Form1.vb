@@ -117,6 +117,7 @@ Public Class MainWin
     'process Value
     'don't forget to ship target, value, type of attack
     Public Sub DataProcessor(ByVal Target As Integer, ByVal Amount As Integer, ByVal Type As String)
+        Static Dim container1 As Integer 'contain advance math result
         Select Case Target
             Case 1 'target player
                 Select Case Type
@@ -125,39 +126,29 @@ Public Class MainWin
                         If (Amount = 0) Then 'check if missed
                             Task.WaitAll(Announcer(My.Settings.GAM1.ToString))
                         Else
-                            If (PlayerDefense <= 0) Then 'check if defense is there
-                                If (PlayerDefense >= Amount) Then 'check if defense is higher then attack
-                                    Task.WaitAll(Announcer(My.Settings.PDH1.ToString))
-                                ElseIf (PlayerDefense > 0) Then 'Player defense is not equal or higher so calculating damage
-                                    PlayerHealth -= Amount - PlayerDefense
-                                Else 'player has no defense ignore calculation
-                                    PlayerHealth -= Amount
-                                    If (PlayerHealth <= 0) Then
-                                        Gameover(1)
-                                    Else
-                                        'Grisou turn
-                                        GameState = False
-                                    End If
-                                End If
-                            End If
                             Select Case PlayerDefense ' checking defense
                                 Case >= Amount ' defense is higher then attack
+                                    Task.WaitAll(Announcer(My.Settings.PDH1.ToString))
+                                    GameUpdate()
                                 Case < Amount 'defense is there but lower
-
+                                    container1 = Amount - PlayerDefense
+                                    PlayerHealth -= container1
+                                    Task.WaitAll(Announcer(My.Settings.PDL1.ToString + container1.ToString + My.Settings.DAM.ToString))
+                                    GameUpdate()
                                 Case = 0 'no defense
                                     PlayerHealth -= Amount
-                                    If (PlayerHealth <= 0) Then
-                                        Gameover(1)
-                                    Else
-                                        'Grisou turn
-                                        GameState = False
-                                    End If
+                                    Task.WaitAll(Announcer(My.Settings.GA1.ToString + Amount.ToString + My.Settings.DAM.ToString))
+                                    GameUpdate()
                             End Select
                         End If
                     Case "D" 'player Casted Defense
                         PlayerDefense += Amount
+                        Task.WaitAll(Announcer(My.Settings.PDC1.ToString + Amount.ToString + My.Settings.D1.ToString))
+                        GameUpdate()
                     Case "R" 'player casted recovery
                         PlayerHealth += Amount
+                        Task.WaitAll(Announcer(My.Settings.PR1.ToString + Amount.ToString + My.Settings.R1.ToString))
+                        GameUpdate()
                 End Select
             Case 2 'target grisou
                 Select Case Type
