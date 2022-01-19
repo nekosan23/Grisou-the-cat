@@ -1,14 +1,14 @@
 ﻿Imports System.Threading.Thread
 Public Class MainWin
-    Public GrisouHealth, PlayerHealth, PlayerRoundDefense As Integer
+    Public GrisouHealth, PlayerHealth, PlayerDefense, GrisouDefense As Integer
     Public GameState As Boolean
     Public GrisouTextA, PlayerTextA As String
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
-        PlayerHealth = 50 : GrisouHealth = 50
+        PlayerHealth = 50 : GrisouHealth = 50 : PlayerDefense = 0 : GrisouDefense = 0
         'Setting up Grisou text
-        GrisouHealthBar.Value = GrisouHealth : GrisouText1.Text = "Grisou" : GrisouText2.Text = GrisouHealth.ToString + " / 50" : GrisouTextA = "Grisou Turn !"
+        GrisouHealthBar.Value = GrisouHealth : GrisouText1.Text = "Grisou" : GrisouText2.Text = GrisouHealth.ToString + " / 50" : GrisouDefenseText.Text = GrisouDefense.ToString : GrisouTextA = "Grisou Turn !"
         'Setting up Player text
-        PlayerHealthBar.Value = PlayerHealth : PlayerText1.Text = "Master" : PlayerText2.Text = PlayerHealth.ToString + " / 50" : PlayerTextA = "Master turn !"
+        PlayerHealthBar.Value = PlayerHealth : PlayerText1.Text = "Master" : PlayerText2.Text = PlayerHealth.ToString + " / 50" : PlayerDefenseText.Text = PlayerDefense.ToString : PlayerTextA = "Master turn !"
         AnnouncerPanel.Visible = False : AnnouncerText.Visible = False
         GameState = True
         Round()
@@ -55,8 +55,7 @@ Public Class MainWin
     'TypeOfAttack A = Attack  D = Defense  R= Recovery
     Public Sub GameEngine(ByVal Caster As Integer, ByVal Target As Integer, ByVal TypeOfAttack As String)
         'setting variable for attack
-        Static Dim Container0, Container1, Container2 As Integer
-        Static Dim Container5 As String
+        Static Dim Container1 As Integer
         Static Dim AttackLow = New Integer() {1, 2, 3, 4}
         Static Dim AttackMedium = New Integer() {7, 9, 11, 12}
         Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
@@ -65,10 +64,8 @@ Public Class MainWin
         'setting variable for recovery
         Static Dim Recovery = New Integer() {5, 10, 15, 18}
         Select Case TypeOfAttack
-            'Attack script
-            Case "A"
-                'get attack failed , low , medium , high
-                Container1 = GetRandom(1, 4)
+            Case "A" 'Attack script
+                Container1 = GetRandom(1, 4) 'get attack failed , low , medium , high
                 Select Case Container1 'check Attack strengh
                     Case 1 'missed
                         If (Target = 1) Then 'Grisou missed
@@ -98,12 +95,16 @@ Public Class MainWin
                             DataProcessor(2, AttackHigh(Container1), "A")
                         End If
                 End Select
-            'Defense script
-            Case "D"
-            'Recovery script
-            Case "R"
-                'get recovery amount
-                Container1 = GetRandom(1, 4)
+            Case "D" 'Defense script
+                Container1 = GetRandom(1, 4) ' get defense amount
+                Select Case Caster
+                    Case "1" 'player casted defense
+                        DataProcessor(1, Defense(Container1), "D")
+                    Case "2" 'grisou casted defense
+                        DataProcessor(2, Defense(Container1), "D")
+                End Select
+            Case "R" 'Recovery script
+                Container1 = GetRandom(1, 4) 'get recovery amount
                 Select Case Caster
                     Case "1" 'player casted recovery
                         DataProcessor("1", Recovery(Container1), "R")
@@ -124,15 +125,37 @@ Public Class MainWin
                         If (Amount = 0) Then 'check if missed
                             Task.WaitAll(Announcer(My.Settings.GAM1.ToString))
                         Else
-                            PlayerHealth -= Amount
-                            If (PlayerHealth <= 0) Then
-                                Gameover(1)
-                            Else
-                                'Grisou turn
-                                GameState = False
+                            If (PlayerDefense <= 0) Then 'check if defense is there
+                                If (PlayerDefense >= Amount) Then 'check if defense is higher then attack
+                                    Task.WaitAll(Announcer(My.Settings.PDH1.ToString))
+                                ElseIf (PlayerDefense > 0) Then 'Player defense is not equal or higher so calculating damage
+                                    PlayerHealth -= Amount - PlayerDefense
+                                Else 'player has no defense ignore calculation
+                                    PlayerHealth -= Amount
+                                    If (PlayerHealth <= 0) Then
+                                        Gameover(1)
+                                    Else
+                                        'Grisou turn
+                                        GameState = False
+                                    End If
+                                End If
                             End If
+                            Select Case PlayerDefense ' checking defense
+                                Case >= Amount ' defense is higher then attack
+                                Case < Amount 'defense is there but lower
+
+                                Case = 0 'no defense
+                                    PlayerHealth -= Amount
+                                    If (PlayerHealth <= 0) Then
+                                        Gameover(1)
+                                    Else
+                                        'Grisou turn
+                                        GameState = False
+                                    End If
+                            End Select
                         End If
-                    Case "D"
+                    Case "D" 'player Casted Defense
+                        PlayerDefense += Amount
                     Case "R" 'player casted recovery
                         PlayerHealth += Amount
                 End Select
@@ -151,11 +174,32 @@ Public Class MainWin
                                 GameState = False
                             End If
                         End If
-                    Case "D"
+                    Case "D" 'grisou casted defense
+                        GrisouDefense += Amount
                     Case "R" 'grisou casted recovery
                         GrisouHealth += Amount
                 End Select
         End Select
+    End Sub
+    'GameUpdate
+    'update everything and check for death
+    Public Sub GameUpdate()
+        'updating player info
+        PlayerText2.Text = PlayerHealth.ToString + " / 50"
+        If (PlayerHealth <= 50) Then
+            PlayerHealthBar.Value = PlayerHealth
+        Else
+            PlayerHealthBar.Value = 50
+        End If
+        PlayerDefenseText.Text = PlayerDefense.ToString
+        'updating grisou info
+        GrisouText2.Text = GrisouHealth.ToString + " / 50"
+        If (GrisouHealth <= 50) Then
+            GrisouHealthBar.Value = GrisouHealth
+        Else
+            GrisouHealthBar.Value = 50
+        End If
+        GrisouDefenseText.Text = GrisouDefense.ToString
     End Sub
     'game over call this whenever somebody die
     Public Sub Gameover(ByVal user As Integer)

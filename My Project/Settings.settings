@@ -17,5 +17,35 @@
     <Setting Name="GAM1" Type="System.String" Scope="User">
       <Value Profile="(Default)">Grisou attacked you but missed</Value>
     </Setting>
+    <Setting Name="PDH1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grisou Attacked you but your defense blocked it</Value>
+    </Setting>
+    <Setting Name="GDH1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">You attacked Grisou but her defense blocked it</Value>
+    </Setting>
+    <Setting Name="PDL1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grisou Attacked you but your defense blocked some of it you took </Value>
+    </Setting>
+    <Setting Name="GDL1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">You attacked Grisou but her defense blocked some of it she took </Value>
+    </Setting>
+    <Setting Name="PR1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">You casted recovery and recover </Value>
+    </Setting>
+    <Setting Name="GR1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grisou casted recovery and recover </Value>
+    </Setting>
+    <Setting Name="R1" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> Health</Value>
+    </Setting>
+    <Setting Name="D1" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> Defense</Value>
+    </Setting>
+    <Setting Name="PDC1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">You casted defense and got </Value>
+    </Setting>
+    <Setting Name="GDC1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grisou casted defense and got </Value>
+    </Setting>
   </Settings>
 </SettingsFile>

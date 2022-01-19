@@ -113,6 +113,126 @@ Namespace My
                 Me("GAM1") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Grisou Attacked you but your defense blocked it")>  _
+        Public Property PDH1() As String
+            Get
+                Return CType(Me("PDH1"),String)
+            End Get
+            Set
+                Me("PDH1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("You attacked Grisou but her defense blocked it")>  _
+        Public Property GDH1() As String
+            Get
+                Return CType(Me("GDH1"),String)
+            End Get
+            Set
+                Me("GDH1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Grisou Attacked you but your defense blocked some of it you took ")>  _
+        Public Property PDL1() As String
+            Get
+                Return CType(Me("PDL1"),String)
+            End Get
+            Set
+                Me("PDL1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("You attacked Grisou but her defense blocked some of it she took ")>  _
+        Public Property GDL1() As String
+            Get
+                Return CType(Me("GDL1"),String)
+            End Get
+            Set
+                Me("GDL1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("You casted recovery and recover ")>  _
+        Public Property PR1() As String
+            Get
+                Return CType(Me("PR1"),String)
+            End Get
+            Set
+                Me("PR1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Grisou casted recovery and recover ")>  _
+        Public Property GR1() As String
+            Get
+                Return CType(Me("GR1"),String)
+            End Get
+            Set
+                Me("GR1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute(" Health")>  _
+        Public Property R1() As String
+            Get
+                Return CType(Me("R1"),String)
+            End Get
+            Set
+                Me("R1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute(" Defense")>  _
+        Public Property D1() As String
+            Get
+                Return CType(Me("D1"),String)
+            End Get
+            Set
+                Me("D1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("You casted defense and got ")>  _
+        Public Property PDC1() As String
+            Get
+                Return CType(Me("PDC1"),String)
+            End Get
+            Set
+                Me("PDC1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Grisou casted defense and got ")>  _
+        Public Property GDC1() As String
+            Get
+                Return CType(Me("GDC1"),String)
+            End Get
+            Set
+                Me("GDC1") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
