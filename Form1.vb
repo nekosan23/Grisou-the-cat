@@ -47,7 +47,36 @@ Public Class MainWin
     End Sub
     'Grisou AI yes we made a cat intelligent
     Public Sub GrisouAI()
-
+        Dim LastChoice As Integer 'last choice so she cannot spam
+        Static Dim Choice As Integer ' current choice
+        Choice = GetRandom(1, 3)
+        If (Choice = LastChoice) Then 'if she chose the same cancel
+            GrisouAI()
+        ElseIf (LastChoice = Nothing) Then ' if she never played before
+            Select Case Choice 'check grisou choice
+                Case 1 'grisou chose attack
+                    LastChoice = Choice
+                    GameEngine(2, 1, "A")
+                Case 2 'grisou chose defense
+                    LastChoice = Choice
+                    GameEngine(2, 1, "D")
+                Case 3 ' grisou chose recovery
+                    LastChoice = Choice
+                    GameEngine(2, 1, "R")
+            End Select
+        Else 'if the choice is not her first turn and not the same
+            Select Case Choice 'check grisou choice
+                Case 1 'grisou chose attack
+                    LastChoice = Choice
+                    GameEngine(2, 1, "A")
+                Case 2 'grisou chose defense
+                    LastChoice = Choice
+                    GameEngine(2, 1, "D")
+                Case 3 ' grisou chose recovery
+                    LastChoice = Choice
+                    GameEngine(2, 1, "R")
+            End Select
+        End If
     End Sub
     'New Processing Script
     'Caster 1= player  2=Grisou
@@ -125,6 +154,7 @@ Public Class MainWin
                     Case "A" 'grisou attack player
                         If (Amount = 0) Then 'check if missed
                             Task.WaitAll(Announcer(My.Settings.GAM1.ToString))
+                            GameUpdate()
                         Else
                             Select Case PlayerDefense ' checking defense
                                 Case >= Amount ' defense is higher then attack
@@ -155,20 +185,31 @@ Public Class MainWin
                     Case "A"
                         If (Amount = 0) Then 'check if missed
                             Task.WaitAll(Announcer(My.Settings.PAM1.ToString))
+                            GameUpdate()
                         Else
-                            'applying damage if not missed
-                            GrisouHealth -= Amount
-                            If (GrisouHealth <= 0) Then
-                                Gameover(2)
-                            Else
-                                'player turn
-                                GameState = False
-                            End If
+                            Select Case GrisouDefense ' checking defense
+                                Case >= Amount ' defense is higher then attack
+                                    Task.WaitAll(Announcer(My.Settings.GDH1.ToString))
+                                    GameUpdate()
+                                Case < Amount 'defense is there but lower
+                                    container1 = Amount - GrisouDefense
+                                    GrisouHealth -= container1
+                                    Task.WaitAll(Announcer(My.Settings.GDL1.ToString + container1.ToString + My.Settings.DAM.ToString))
+                                    GameUpdate()
+                                Case = 0 'no defense
+                                    GrisouHealth -= Amount
+                                    Task.WaitAll(Announcer(My.Settings.PA1.ToString + Amount.ToString + My.Settings.DAM.ToString))
+                                    GameUpdate()
+                            End Select
                         End If
                     Case "D" 'grisou casted defense
                         GrisouDefense += Amount
+                        Task.WaitAll(Announcer(My.Settings.GDC1.ToString + Amount.ToString + My.Settings.D1.ToString))
+                        GameUpdate()
                     Case "R" 'grisou casted recovery
                         GrisouHealth += Amount
+                        Task.WaitAll(Announcer(My.Settings.GR1.ToString + Amount.ToString + My.Settings.R1.ToString))
+                        GameUpdate()
                 End Select
         End Select
     End Sub
@@ -191,6 +232,16 @@ Public Class MainWin
             GrisouHealthBar.Value = 50
         End If
         GrisouDefenseText.Text = GrisouDefense.ToString
+        If (PlayerHealth <= 0) Then 'check if player died
+            Gameover(1)
+        Else
+            Round()
+        End If
+        If (GrisouHealth <= 0) Then 'check if grisou died
+            Gameover(2)
+        Else
+            Round()
+        End If
     End Sub
     'game over call this whenever somebody die
     Public Sub Gameover(ByVal user As Integer)
