@@ -102,6 +102,14 @@ Public Class MainWin
             Case "D"
             'Recovery script
             Case "R"
+                'get recovery amount
+                Container1 = GetRandom(1, 4)
+                Select Case Caster
+                    Case "1" 'player casted recovery
+                        DataProcessor("1", Recovery(Container1), "R")
+                    Case "2" ' grisou casted recovery
+                        DataProcessor("2", Recovery(Container1), "R")
+                End Select
         End Select
 
     End Sub
@@ -109,16 +117,14 @@ Public Class MainWin
     'don't forget to ship target, value, type of attack
     Public Sub DataProcessor(ByVal Target As Integer, ByVal Amount As Integer, ByVal Type As String)
         Select Case Target
-            'target player
-            Case 1
+            Case 1 'target player
                 Select Case Type
-                    'grisou attack player
-                    Case "A"
-                        'check if missed
-                        If (Amount = 0) Then
+
+                    Case "A" 'grisou attack player
+                        If (Amount = 0) Then 'check if missed
                             Task.WaitAll(Announcer(My.Settings.GAM1.ToString))
                         Else
-                            PlayerHealth = PlayerHealth - Amount
+                            PlayerHealth -= Amount
                             If (PlayerHealth <= 0) Then
                                 Gameover(1)
                             Else
@@ -127,18 +133,17 @@ Public Class MainWin
                             End If
                         End If
                     Case "D"
-                    Case "R"
+                    Case "R" 'player casted recovery
+                        PlayerHealth += Amount
                 End Select
-            'target grisou
-            Case 2
+            Case 2 'target grisou
                 Select Case Type
                     Case "A"
-                        'check if missed
-                        If (Amount = 0) Then
+                        If (Amount = 0) Then 'check if missed
                             Task.WaitAll(Announcer(My.Settings.PAM1.ToString))
                         Else
                             'applying damage if not missed
-                            GrisouHealth = GrisouHealth - Amount
+                            GrisouHealth -= Amount
                             If (GrisouHealth <= 0) Then
                                 Gameover(2)
                             Else
@@ -147,117 +152,9 @@ Public Class MainWin
                             End If
                         End If
                     Case "D"
-                    Case "R"
+                    Case "R" 'grisou casted recovery
+                        GrisouHealth += Amount
                 End Select
-        End Select
-    End Sub
-    'Defense System cast every defense never forget to mention the user casting
-    Public Sub Defense()
-        Static Dim Defense = New Integer() {6, 8, 12, 13}
-        Static Dim Container1 As Integer
-        Container1 = GetRandom(1, 4)
-        Task.WaitAll(Announcer("You casted defense and got " + Defense(Container1).ToString + " defense for this turn"))
-        DataProcess(1, "Defense", Defense(Container1))
-    End Sub
-    'Recovery System cast every recovery never forget to mention the user casting
-    Public Sub Recovery(ByVal user As Integer)
-        Static Dim Recovery = New Integer() {5, 10, 15, 18}
-        Static Dim container1 As Integer
-        container1 = GetRandom(1, 4)
-        If (user = 1) Then
-            Task.WaitAll(Announcer("You casted recovery and recovered " + Recovery(container1).ToString + " HP"))
-            DataProcess(1, "Recovery", Recovery(container1))
-        Else
-            Task.WaitAll(Announcer("Grisou casted recovery and recovered " + Recovery(container1).ToString + " HP"))
-            DataProcess(2, "Recovery", Recovery(container1))
-        End If
-    End Sub
-    'Data Processer
-    'target list    1 player    2 grisou
-    'DataType   Attack  Defense  Recovery
-    Public Sub DataProcess(ByVal Target As Integer, ByVal DataType As String, ByVal DataValue As Integer)
-        Static Dim Container1, Container2 As Integer
-        Select Case DataType
-            'Calculation for attack
-            Case "Attack"
-                'target player
-                If (Target = 1) Then
-                    Container1 = PlayerHealth - DataValue
-                    'check if player died
-                    If (Container1 <= 0) Then
-                        'Game over
-                        Gameover(1)
-                    Else
-                        'check the defense
-                        If (PlayerRoundDefense < 0) Then
-                            Container2 = DataValue - PlayerRoundDefense
-                            'player has defense so calculation
-                            If (Container2 >= 0) Then
-                                'defense canceled the attack
-                                Task.WaitAll(Announcer("Your defense was high enough to cancel grisou attack"))
-                            Else
-                                'player doesn't have enough defense
-                                PlayerHealth -= Container2
-                            End If
-                        Else
-                            'player has no defense
-                            PlayerHealth -= DataValue
-                        End If
-                        'checking if life bar can be updated
-                        If (PlayerHealth >= 50) Then
-                            PlayerHealthBar.Value = PlayerHealth
-                            PlayerText2.Text = PlayerHealth.ToString + " / 50"
-                        End If
-                    End If
-                ElseIf (Target = 2) Then
-                    Container1 = GrisouHealth - DataValue
-                    'check if grisou died
-                    If (Container1 <= 0) Then
-                        'Game over
-                        Gameover(1)
-                    Else
-                        'apply attack damage
-                        GrisouHealth -= DataValue
-                        'checking if life bar can be updated
-                        If (GrisouHealth >= 50) Then
-                            GrisouHealthBar.Value = GrisouHealth
-                            GrisouText2.Text = GrisouHealth.ToString + " / 50"
-                        End If
-                    End If
-                End If
-            'calculation for defense
-            Case "Defense"
-                'Defense can only be casted by player but we're doing it to be safe
-                If (Target = 1) Then
-                    PlayerRoundDefense = 0
-                    PlayerRoundDefense = DataValue
-                Else
-                    MsgBox("Grisou cannot have defense this must be a mistake in the code please contact the developer")
-                End If
-            Case "Recovery"
-                'player casted recovery
-                If (Target = 1) Then
-                    PlayerHealth += DataValue
-                    'checking if progressbar can be updated without Integer Overflow
-                    If (PlayerHealth < 50) Then
-                        PlayerHealthBar.Value = 50
-                        PlayerText2.Text = PlayerHealth.ToString + " / 50"
-                    Else
-                        PlayerHealthBar.Value = PlayerHealth
-                        PlayerText2.Text = PlayerHealth.ToString + " / 50"
-                    End If
-                    'grisou casted recovery
-                ElseIf (Target = 2) Then
-                    GrisouHealth += DataValue
-                    'checking if progressbar can be updated without Integer Overflow
-                    If (GrisouHealth < 50) Then
-                        GrisouHealthBar.Value = 50
-                        GrisouText2.Text = GrisouHealth.ToString + " / 50"
-                    Else
-                        GrisouHealthBar.Value = GrisouHealth
-                        GrisouText2.Text = GrisouHealth.ToString + " / 50"
-                    End If
-                End If
         End Select
     End Sub
     'game over call this whenever somebody die
@@ -267,6 +164,7 @@ Public Class MainWin
             DisablePlayerButton()
             Task.WaitAll(Announcer("You died Game Over"))
         ElseIf (user = 2) Then
+            'Grisou failed
             DisablePlayerButton()
             Task.WaitAll(Announcer("Grisou died you win !!"))
         End If

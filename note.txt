@@ -3,3 +3,12 @@ attack
 recover
 
 Make sure that grisou is force to attack when player cast defense
+
+gameover()
+1 player gameover
+2 grisou gameover
+
+target
+1 user
+2 grisou
+
