@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -52,6 +52,66 @@ Namespace My
 #End If
                 Return defaultInstance
             End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("You attacked Grisou for ")>  _
+        Public Property PA1() As String
+            Get
+                Return CType(Me("PA1"),String)
+            End Get
+            Set
+                Me("PA1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute(" Damage")>  _
+        Public Property DAM() As String
+            Get
+                Return CType(Me("DAM"),String)
+            End Get
+            Set
+                Me("DAM") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Grisou attack you for ")>  _
+        Public Property GA1() As String
+            Get
+                Return CType(Me("GA1"),String)
+            End Get
+            Set
+                Me("GA1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("You attacked Grisou but missed")>  _
+        Public Property PAM1() As String
+            Get
+                Return CType(Me("PAM1"),String)
+            End Get
+            Set
+                Me("PAM1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Grisou attacked you but missed")>  _
+        Public Property GAM1() As String
+            Get
+                Return CType(Me("GAM1"),String)
+            End Get
+            Set
+                Me("GAM1") = value
+            End Set
         End Property
     End Class
 End Namespace

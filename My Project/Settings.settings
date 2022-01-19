@@ -1,7 +1,21 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="PA1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">You attacked Grisou for </Value>
+    </Setting>
+    <Setting Name="DAM" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> Damage</Value>
+    </Setting>
+    <Setting Name="GA1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grisou attack you for </Value>
+    </Setting>
+    <Setting Name="PAM1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">You attacked Grisou but missed</Value>
+    </Setting>
+    <Setting Name="GAM1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grisou attacked you but missed</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

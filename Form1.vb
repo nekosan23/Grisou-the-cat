@@ -4,20 +4,12 @@ Public Class MainWin
     Public GameState As Boolean
     Public GrisouTextA, PlayerTextA As String
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
-        GrisouHealth = 50
-        PlayerHealth = 50
+        PlayerHealth = 50 : GrisouHealth = 50
         'Setting up Grisou text
-        GrisouHealthBar.Value = GrisouHealth
-        GrisouText1.Text = "Grisou"
-        GrisouText2.Text = GrisouHealth.ToString + " / 50"
-        GrisouTextA = "Grisou Turn !"
+        GrisouHealthBar.Value = GrisouHealth : GrisouText1.Text = "Grisou" : GrisouText2.Text = GrisouHealth.ToString + " / 50" : GrisouTextA = "Grisou Turn !"
         'Setting up Player text
-        PlayerHealthBar.Value = PlayerHealth
-        PlayerText1.Text = "Sam"
-        PlayerText2.Text = PlayerHealth.ToString + " / 50"
-        PlayerTextA = "Player turn !"
-        AnnouncerPanel.Visible = False
-        AnnouncerText.Visible = False
+        PlayerHealthBar.Value = PlayerHealth : PlayerText1.Text = "Master" : PlayerText2.Text = PlayerHealth.ToString + " / 50" : PlayerTextA = "Master turn !"
+        AnnouncerPanel.Visible = False : AnnouncerText.Visible = False
         GameState = True
         Round()
     End Sub
@@ -57,54 +49,106 @@ Public Class MainWin
     Public Sub GrisouAI()
 
     End Sub
-
-    'attack system cast at every attack never forget to mention the user casting
-    Public Sub Attack(ByVal user As Integer)
-        'setting up variable
-        Static Dim AttackLevel As Integer
+    'New Processing Script
+    'Caster 1= player  2=Grisou
+    'Target 1= player  2=Grisou
+    'TypeOfAttack A = Attack  D = Defense  R= Recovery
+    Public Sub GameEngine(ByVal Caster As Integer, ByVal Target As Integer, ByVal TypeOfAttack As String)
+        'setting variable for attack
+        Static Dim Container0, Container1, Container2 As Integer
+        Static Dim Container5 As String
         Static Dim AttackLow = New Integer() {1, 2, 3, 4}
         Static Dim AttackMedium = New Integer() {7, 9, 11, 12}
         Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
-        Static Dim Container1 As Integer
-        AttackLevel = GetRandom(1, 4)
-        Select Case AttackLevel
+        'setting variable for defense
+        Static Dim Defense = New Integer() {6, 8, 12, 13}
+        'setting variable for recovery
+        Static Dim Recovery = New Integer() {5, 10, 15, 18}
+        Select Case TypeOfAttack
+            'Attack script
+            Case "A"
+                'get attack failed , low , medium , high
+                Container1 = GetRandom(1, 4)
+                Select Case Container1 'check Attack strengh
+                    Case 1 'missed
+                        If (Target = 1) Then 'Grisou missed
+                            DataProcessor(1, 0, "A")
+                        Else 'player missed
+                            DataProcessor(2, 0, "A")
+                        End If
+                    Case 2 'Low hit
+                        Container1 = GetRandom(1, 4)
+                        If (Target = 1) Then 'Grisou attack low
+                            DataProcessor(1, AttackLow(Container1), "A")
+                        Else 'player attack low
+                            DataProcessor(2, AttackLow(Container1), "A")
+                        End If
+                    Case 3 'Medium hit
+                        Container1 = GetRandom(1, 4)
+                        If (Target = 1) Then 'Grisou attack medium
+                            DataProcessor(1, AttackMedium(Container1), "A")
+                        Else 'player attack medium
+                            DataProcessor(2, AttackMedium(Container1), "A")
+                        End If
+                    Case 4 'high hit
+                        Container1 = GetRandom(1, 4)
+                        If (Target = 1) Then 'Grisou attack high
+                            DataProcessor(1, AttackHigh(Container1), "A")
+                        Else 'player attack high
+                            DataProcessor(2, AttackHigh(Container1), "A")
+                        End If
+                End Select
+            'Defense script
+            Case "D"
+            'Recovery script
+            Case "R"
+        End Select
+
+    End Sub
+    'process Value
+    'don't forget to ship target, value, type of attack
+    Public Sub DataProcessor(ByVal Target As Integer, ByVal Amount As Integer, ByVal Type As String)
+        Select Case Target
+            'target player
             Case 1
-                'Hit or miss i guess they never miss humm
-                If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack missed"))
-                Else
-                    Task.WaitAll(Announcer("Grisou attack missed"))
-                End If
+                Select Case Type
+                    'grisou attack player
+                    Case "A"
+                        'check if missed
+                        If (Amount = 0) Then
+                            Task.WaitAll(Announcer(My.Settings.GAM1.ToString))
+                        Else
+                            PlayerHealth = PlayerHealth - Amount
+                            If (PlayerHealth <= 0) Then
+                                Gameover(1)
+                            Else
+                                'Grisou turn
+                                GameState = False
+                            End If
+                        End If
+                    Case "D"
+                    Case "R"
+                End Select
+            'target grisou
             Case 2
-                'Low
-                Container1 = GetRandom(1, 4)
-                If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack did " + AttackLow(Container1).ToString + " damage"))
-                    DataProcess(2, "Attack", AttackLow(Container1))
-                Else
-                    Task.WaitAll(Announcer("Grisou attack did " + AttackLow(Container1).ToString + " damage"))
-                    DataProcess(1, "Attack", AttackLow(Container1))
-                End If
-            Case 3
-                'Medium
-                Container1 = GetRandom(1, 4)
-                If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack did " + AttackMedium(Container1).ToString + " damage"))
-                    DataProcess(2, "Attack", AttackMedium(Container1))
-                Else
-                    Task.WaitAll(Announcer("Grisou attack did " + AttackMedium(Container1).ToString + " damage"))
-                    DataProcess(1, "Attack", AttackMedium(Container1))
-                End If
-            Case 4
-                'High
-                Container1 = GetRandom(1, 4)
-                If (user = 1) Then
-                    Task.WaitAll(Announcer("Your attack did " + AttackHigh(Container1).ToString + " damage"))
-                    DataProcess(2, "Attack", AttackHigh(Container1))
-                Else
-                    Task.WaitAll(Announcer("Grisou attack did " + AttackHigh(Container1).ToString + " damage"))
-                    DataProcess(1, "Attack", AttackHigh(Container1))
-                End If
+                Select Case Type
+                    Case "A"
+                        'check if missed
+                        If (Amount = 0) Then
+                            Task.WaitAll(Announcer(My.Settings.PAM1.ToString))
+                        Else
+                            'applying damage if not missed
+                            GrisouHealth = GrisouHealth - Amount
+                            If (GrisouHealth <= 0) Then
+                                Gameover(2)
+                            Else
+                                'player turn
+                                GameState = False
+                            End If
+                        End If
+                    Case "D"
+                    Case "R"
+                End Select
         End Select
     End Sub
     'Defense System cast every defense never forget to mention the user casting
@@ -117,7 +161,7 @@ Public Class MainWin
     End Sub
     'Recovery System cast every recovery never forget to mention the user casting
     Public Sub Recovery(ByVal user As Integer)
-        Static Dim Recovery = New Integer() {5, 10, 15, 20}
+        Static Dim Recovery = New Integer() {5, 10, 15, 18}
         Static Dim container1 As Integer
         container1 = GetRandom(1, 4)
         If (user = 1) Then
@@ -221,10 +265,10 @@ Public Class MainWin
         If (user = 1) Then
             'Player failed
             DisablePlayerButton()
-            Task.WaitAll(Announcer("You just died Game Over"))
+            Task.WaitAll(Announcer("You died Game Over"))
         ElseIf (user = 2) Then
-            EnablePlayerButton()
-            Task.WaitAll(Announcer("Grisou just died you win !!"))
+            DisablePlayerButton()
+            Task.WaitAll(Announcer("Grisou died you win !!"))
         End If
     End Sub
     'Announcer
@@ -249,16 +293,13 @@ Public Class MainWin
         Return Generator.Next(Min, Max)
     End Function
     Private Sub PlayerAttackClick(sender As Object, e As EventArgs) Handles PlayerAction1.Click
-        DisablePlayerButton()
-        Attack(1)
+        DisablePlayerButton() : GameEngine(1, 2, "A")
     End Sub
     Private Sub PlayerDefenseClick(sender As Object, e As EventArgs) Handles PlayerAction2.Click
-        DisablePlayerButton()
-        'defense(1)
+        DisablePlayerButton() : GameEngine(1, 2, "D")
     End Sub
     Private Sub PlayerRecoverClick(sender As Object, e As EventArgs) Handles PlayerAction3.Click
-        DisablePlayerButton()
-        'recover(1)
+        DisablePlayerButton() : GameEngine(1, 2, "R")
     End Sub
     'Below is fast code for saving space
     Public Sub DisablePlayerButton()
