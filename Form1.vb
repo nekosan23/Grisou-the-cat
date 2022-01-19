@@ -3,6 +3,7 @@ Public Class MainWin
     Public GrisouHealth, PlayerHealth, PlayerDefense, GrisouDefense As Integer
     Public GameState As Boolean
     Public GrisouTextA, PlayerTextA As String
+    Public TurnValue As Integer
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
         PlayerHealth = 50 : GrisouHealth = 50 : PlayerDefense = 0 : GrisouDefense = 0
         'Setting up Grisou text
@@ -15,7 +16,6 @@ Public Class MainWin
     End Sub
     'Round system need to be active at any time or else game break
     Public Sub Round()
-        Dim TurnValue As Integer
         Select Case GameState
             Case True 'first time playing
                 TurnValue = GetRandom(1, 2)
@@ -255,7 +255,7 @@ Public Class MainWin
         If (user = 1) Then
             'Player failed
             DisablePlayerButton()
-            Task.WaitAll(Announcer("You died Game Over"))
+            Task.WaitAll(Announcer("You died! Game Over"))
         ElseIf (user = 2) Then
             'Grisou failed
             DisablePlayerButton()
