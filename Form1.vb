@@ -16,34 +16,37 @@ Public Class MainWin
     'Round system need to be active at any time or else game break
     Public Sub Round()
         Dim TurnValue As Integer
-        If (GameState = True) Then
-            'Game Just Got started
-
-            'Rolling dice who's starting
-            TurnValue = GetRandom(1, 2)
-        ElseIf (GameState = False) Then
-            'Game Already Started
-
-            'if this get called it mean the person did his turn so let change the value
-            If (TurnValue = 1) Then
-                TurnValue = 2
-            ElseIf (TurnValue = 2) Then
-                TurnValue = 1
-            End If
-        Else
-            MsgBox("GameState is not found")
-        End If
-        'Checking who's turn it is
-        If (TurnValue = 1) Then
-            'player is starting
-            EnablePlayerButton()
-            Task.WaitAll(Announcer(PlayerTextA))
-        ElseIf (TurnValue = 2) Then
-            'Grisou is starting
-            DisablePlayerButton()
-            Task.WaitAll(Announcer(GrisouTextA))
-            GrisouAI()
-        End If
+        Select Case GameState
+            Case True 'first time playing
+                TurnValue = GetRandom(1, 2)
+                Select Case TurnValue
+                    Case 1
+                        'player is starting
+                        EnablePlayerButton()
+                        Task.WaitAll(Announcer(PlayerTextA)) : Console.WriteLine("first game announcer")
+                    Case 2
+                        'Grisou is starting
+                        DisablePlayerButton()
+                        Task.WaitAll(Announcer(GrisouTextA)) : Console.WriteLine("grisou turn")
+                        GrisouAI()
+                End Select
+            Case False 'game already started
+                If (TurnValue = 1) Then
+                    TurnValue = 2
+                ElseIf (TurnValue = 2) Then
+                    TurnValue = 1
+                End If
+                If (TurnValue = 1) Then 'Checking who's turn it is
+                    'player is starting
+                    EnablePlayerButton()
+                    Task.WaitAll(Announcer(PlayerTextA)) : Console.WriteLine("second game announcer")
+                ElseIf (TurnValue = 2) Then
+                    'Grisou is starting
+                    DisablePlayerButton()
+                    Task.WaitAll(Announcer(GrisouTextA))
+                    GrisouAI()
+                End If
+        End Select
     End Sub
     'Grisou AI yes we made a cat intelligent
     Public Sub GrisouAI()
@@ -218,17 +221,21 @@ Public Class MainWin
     Public Sub GameUpdate()
         'updating player info
         PlayerText2.Text = PlayerHealth.ToString + " / 50"
-        If (PlayerHealth <= 50) Then
+        If (PlayerHealth <= 0) Then 'if value is under 0
+            PlayerHealthBar.Value = 0
+        ElseIf (PlayerHealth <= 50) Then 'if value is between 50 and 0
             PlayerHealthBar.Value = PlayerHealth
-        Else
+        Else 'if it's over 50
             PlayerHealthBar.Value = 50
         End If
         PlayerDefenseText.Text = PlayerDefense.ToString
         'updating grisou info
         GrisouText2.Text = GrisouHealth.ToString + " / 50"
-        If (GrisouHealth <= 50) Then
-            GrisouHealthBar.Value = GrisouHealth
-        Else
+        If (GrisouHealth <= 0) Then 'if value is under 0
+            GrisouHealthBar.Value = 0
+        ElseIf (GrisouHealth <= 50) Then 'if value is between 50 and 0
+            GrisouHealthBar.Value = PlayerHealth
+        Else 'if it's over 50
             GrisouHealthBar.Value = 50
         End If
         GrisouDefenseText.Text = GrisouDefense.ToString
