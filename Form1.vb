@@ -221,23 +221,25 @@ Public Class MainWin
     Public Sub GameUpdate()
         'updating player info
         PlayerText2.Text = PlayerHealth.ToString + " / 50"
-        If (PlayerHealth <= 0) Then 'if value is under 0
-            PlayerHealthBar.Value = 0
-        ElseIf (PlayerHealth <= 50) Then 'if value is between 50 and 0
-            PlayerHealthBar.Value = PlayerHealth
-        Else 'if it's over 50
-            PlayerHealthBar.Value = 50
-        End If
+        Select Case PlayerHealth
+            Case <= 0 'digit is 0 or lower
+                PlayerHealthBar.Value = 0
+            Case >= 50 'bigger or equal to 50
+                PlayerHealthBar.Value = 50
+            Case < 50 'under 50
+                PlayerHealthBar.Value = PlayerHealth
+        End Select
         PlayerDefenseText.Text = PlayerDefense.ToString
         'updating grisou info
         GrisouText2.Text = GrisouHealth.ToString + " / 50"
-        If (GrisouHealth <= 0) Then 'if value is under 0
-            GrisouHealthBar.Value = 0
-        ElseIf (GrisouHealth <= 50) Then 'if value is between 50 and 0
-            GrisouHealthBar.Value = PlayerHealth
-        Else 'if it's over 50
-            GrisouHealthBar.Value = 50
-        End If
+        Select Case GrisouHealth
+            Case <= 0 'digit is 0 or lower
+                GrisouHealthBar.Value = 0
+            Case >= 50 'bigger or equal to 50
+                GrisouHealthBar.Value = 50
+            Case < 50 'under 50
+                GrisouHealthBar.Value = PlayerHealth
+        End Select
         GrisouDefenseText.Text = GrisouDefense.ToString
         If (PlayerHealth <= 0) Then 'check if player died
             Gameover(1)
