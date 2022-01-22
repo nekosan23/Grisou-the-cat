@@ -238,7 +238,7 @@ Public Class MainWin
             Case >= 50 'bigger or equal to 50
                 GrisouHealthBar.Value = 50
             Case < 50 'under 50
-                GrisouHealthBar.Value = PlayerHealth
+                GrisouHealthBar.Value = GrisouHealth
         End Select
         GrisouDefenseText.Text = GrisouDefense.ToString
         If (PlayerHealth <= 0) Then 'check if player died
@@ -266,19 +266,19 @@ Public Class MainWin
     End Sub
     'Announcer
     Public Async Function Announcer(text As String) As Task
-        Dim animationcountdown As Integer = -490
-        AnnouncerText.Text = text
-        AnnouncerText.Visible = True
-        AnnouncerPanel.Visible = True
-        Do
-            AnnouncerPanel.Location = New Point(animationcountdown, 292)
-            animationcountdown += 10
-            Sleep(10)
-        Loop Until animationcountdown = 10
-        AnnouncerText.Refresh()
-        Sleep(3000)
-        AnnouncerText.Visible = False
-        AnnouncerPanel.Visible = False
+        'Dim animationcountdown As Integer = -490
+        'AnnouncerText.Text = text
+        'AnnouncerText.Visible = True
+        'AnnouncerPanel.Visible = True
+        ' Do
+        'AnnouncerPanel.Location = New Point(animationcountdown, 292)
+        'animationcountdown += 10
+        'Sleep(10)
+        'Loop Until animationcountdown = 10
+        'AnnouncerText.Refresh()
+        'AnnouncerText.Visible = False
+        'AnnouncerPanel.Visible = False
+        Console.WriteLine(text)
     End Function
     'Random Generator for integer
     Public Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer

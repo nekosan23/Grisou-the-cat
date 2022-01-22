@@ -26,20 +26,20 @@ Partial Class MainWin
         Me.AnnouncerPanel = New System.Windows.Forms.Panel()
         Me.AnnouncerText = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.GrisouDefenseText = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.GrisouHealthBar = New System.Windows.Forms.ProgressBar()
         Me.GrisouText2 = New System.Windows.Forms.Label()
         Me.GrisouText1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PlayerDefenseText = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.PlayerHealthBar = New System.Windows.Forms.ProgressBar()
         Me.PlayerText2 = New System.Windows.Forms.Label()
         Me.PlayerText1 = New System.Windows.Forms.Label()
         Me.PlayerAction3 = New System.Windows.Forms.Button()
         Me.PlayerAction2 = New System.Windows.Forms.Button()
         Me.PlayerAction1 = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.GrisouDefenseText = New System.Windows.Forms.Label()
-        Me.PlayerDefenseText = New System.Windows.Forms.Label()
         Me.MainDisplay.SuspendLayout()
         Me.AnnouncerPanel.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -57,7 +57,7 @@ Partial Class MainWin
         Me.MainDisplay.Controls.Add(Me.PlayerAction2)
         Me.MainDisplay.Controls.Add(Me.PlayerAction1)
         Me.MainDisplay.Location = New System.Drawing.Point(0, 0)
-        Me.MainDisplay.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.MainDisplay.Margin = New System.Windows.Forms.Padding(2)
         Me.MainDisplay.Name = "MainDisplay"
         Me.MainDisplay.Size = New System.Drawing.Size(360, 585)
         Me.MainDisplay.TabIndex = 0
@@ -67,7 +67,7 @@ Partial Class MainWin
         Me.AnnouncerPanel.BackColor = System.Drawing.SystemColors.ControlDark
         Me.AnnouncerPanel.Controls.Add(Me.AnnouncerText)
         Me.AnnouncerPanel.Location = New System.Drawing.Point(0, 237)
-        Me.AnnouncerPanel.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.AnnouncerPanel.Margin = New System.Windows.Forms.Padding(2)
         Me.AnnouncerPanel.Name = "AnnouncerPanel"
         Me.AnnouncerPanel.Size = New System.Drawing.Size(360, 41)
         Me.AnnouncerPanel.TabIndex = 6
@@ -90,18 +90,37 @@ Partial Class MainWin
         Me.Panel2.Controls.Add(Me.GrisouText2)
         Me.Panel2.Controls.Add(Me.GrisouText1)
         Me.Panel2.Location = New System.Drawing.Point(201, 10)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(150, 63)
         Me.Panel2.TabIndex = 4
         '
+        'GrisouDefenseText
+        '
+        Me.GrisouDefenseText.AutoSize = True
+        Me.GrisouDefenseText.Location = New System.Drawing.Point(52, 43)
+        Me.GrisouDefenseText.Name = "GrisouDefenseText"
+        Me.GrisouDefenseText.Size = New System.Drawing.Size(13, 13)
+        Me.GrisouDefenseText.TabIndex = 4
+        Me.GrisouDefenseText.Text = "0"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 43)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(56, 13)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "Defense : "
+        '
         'GrisouHealthBar
         '
         Me.GrisouHealthBar.Location = New System.Drawing.Point(0, 22)
-        Me.GrisouHealthBar.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GrisouHealthBar.Margin = New System.Windows.Forms.Padding(2)
         Me.GrisouHealthBar.Maximum = 50
         Me.GrisouHealthBar.Name = "GrisouHealthBar"
         Me.GrisouHealthBar.Size = New System.Drawing.Size(150, 19)
+        Me.GrisouHealthBar.Step = 0
         Me.GrisouHealthBar.TabIndex = 2
         '
         'GrisouText2
@@ -130,15 +149,33 @@ Partial Class MainWin
         Me.Panel1.Controls.Add(Me.PlayerText2)
         Me.Panel1.Controls.Add(Me.PlayerText1)
         Me.Panel1.Location = New System.Drawing.Point(9, 439)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(150, 61)
         Me.Panel1.TabIndex = 3
         '
+        'PlayerDefenseText
+        '
+        Me.PlayerDefenseText.AutoSize = True
+        Me.PlayerDefenseText.Location = New System.Drawing.Point(51, 40)
+        Me.PlayerDefenseText.Name = "PlayerDefenseText"
+        Me.PlayerDefenseText.Size = New System.Drawing.Size(13, 13)
+        Me.PlayerDefenseText.TabIndex = 5
+        Me.PlayerDefenseText.Text = "0"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 40)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(56, 13)
+        Me.Label2.TabIndex = 4
+        Me.Label2.Text = "Defense : "
+        '
         'PlayerHealthBar
         '
         Me.PlayerHealthBar.Location = New System.Drawing.Point(0, 19)
-        Me.PlayerHealthBar.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.PlayerHealthBar.Margin = New System.Windows.Forms.Padding(2)
         Me.PlayerHealthBar.Maximum = 50
         Me.PlayerHealthBar.Name = "PlayerHealthBar"
         Me.PlayerHealthBar.Size = New System.Drawing.Size(150, 19)
@@ -166,7 +203,7 @@ Partial Class MainWin
         '
         Me.PlayerAction3.Enabled = False
         Me.PlayerAction3.Location = New System.Drawing.Point(244, 513)
-        Me.PlayerAction3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.PlayerAction3.Margin = New System.Windows.Forms.Padding(2)
         Me.PlayerAction3.Name = "PlayerAction3"
         Me.PlayerAction3.Size = New System.Drawing.Size(106, 63)
         Me.PlayerAction3.TabIndex = 2
@@ -177,7 +214,7 @@ Partial Class MainWin
         '
         Me.PlayerAction2.Enabled = False
         Me.PlayerAction2.Location = New System.Drawing.Point(129, 513)
-        Me.PlayerAction2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.PlayerAction2.Margin = New System.Windows.Forms.Padding(2)
         Me.PlayerAction2.Name = "PlayerAction2"
         Me.PlayerAction2.Size = New System.Drawing.Size(111, 63)
         Me.PlayerAction2.TabIndex = 1
@@ -187,48 +224,12 @@ Partial Class MainWin
         'PlayerAction1
         '
         Me.PlayerAction1.Location = New System.Drawing.Point(9, 513)
-        Me.PlayerAction1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.PlayerAction1.Margin = New System.Windows.Forms.Padding(2)
         Me.PlayerAction1.Name = "PlayerAction1"
         Me.PlayerAction1.Size = New System.Drawing.Size(116, 63)
         Me.PlayerAction1.TabIndex = 0
         Me.PlayerAction1.Text = "Attaque"
         Me.PlayerAction1.UseVisualStyleBackColor = True
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 43)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(56, 13)
-        Me.Label1.TabIndex = 3
-        Me.Label1.Text = "Defense : "
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(3, 40)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(56, 13)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Defense : "
-        '
-        'GrisouDefenseText
-        '
-        Me.GrisouDefenseText.AutoSize = True
-        Me.GrisouDefenseText.Location = New System.Drawing.Point(52, 43)
-        Me.GrisouDefenseText.Name = "GrisouDefenseText"
-        Me.GrisouDefenseText.Size = New System.Drawing.Size(13, 13)
-        Me.GrisouDefenseText.TabIndex = 4
-        Me.GrisouDefenseText.Text = "0"
-        '
-        'PlayerDefenseText
-        '
-        Me.PlayerDefenseText.AutoSize = True
-        Me.PlayerDefenseText.Location = New System.Drawing.Point(51, 40)
-        Me.PlayerDefenseText.Name = "PlayerDefenseText"
-        Me.PlayerDefenseText.Size = New System.Drawing.Size(13, 13)
-        Me.PlayerDefenseText.TabIndex = 5
-        Me.PlayerDefenseText.Text = "0"
         '
         'MainWin
         '
@@ -237,7 +238,7 @@ Partial Class MainWin
         Me.ClientSize = New System.Drawing.Size(360, 585)
         Me.Controls.Add(Me.MainDisplay)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "MainWin"
         Me.Text = "Jeux de merde a sam"
         Me.MainDisplay.ResumeLayout(False)
