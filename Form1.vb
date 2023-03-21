@@ -19,36 +19,19 @@ Public Class MainWin
     End Sub
     'Round system need to be active at any time or else game break
     Public Sub Round()
-        Select Case GameState
-            Case True 'first time playing
-                TurnValue = GetRandom(1, 2)
-                Select Case TurnValue
-                    Case 1
-                        'player is starting
-                        EnablePlayerButton()
-                        Task.WaitAll(Announcer(PlayerTextA)) : Console.WriteLine("first game announcer")
-                    Case 2
-                        'Grisou is starting
-                        DisablePlayerButton()
-                        Task.WaitAll(Announcer(GrisouTextA)) : Console.WriteLine("grisou turn")
-                        GrisouAI()
-                End Select
-            Case False 'game already started
-                If (TurnValue = 1) Then
-                    TurnValue = 2
-                ElseIf (TurnValue = 2) Then
-                    TurnValue = 1
-                End If
-                If (TurnValue = 1) Then 'Checking who's turn it is
-                    'player is starting
-                    EnablePlayerButton()
-                    Task.WaitAll(Announcer(PlayerTextA)) : Console.WriteLine("second game announcer")
-                ElseIf (TurnValue = 2) Then
-                    'Grisou is starting
-                    DisablePlayerButton()
-                    Task.WaitAll(Announcer(GrisouTextA))
-                    GrisouAI()
-                End If
+        If (GameState = True) Then
+            TurnValue = GetRandom(1, 2)
+        End If
+        Select Case TurnValue
+            Case 1
+                'player is starting
+                EnablePlayerButton()
+                Task.WaitAll(Announcer(PlayerTextA)) : Console.WriteLine("first game announcer")
+            Case 2
+                'Grisou is starting
+                DisablePlayerButton()
+                Task.WaitAll(Announcer(GrisouTextA)) : Console.WriteLine("grisou turn")
+                GrisouAI()
         End Select
     End Sub
     'Grisou AI yes we made a cat intelligent
