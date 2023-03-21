@@ -1,9 +1,12 @@
 ﻿Imports System.Threading.Thread
+
 Public Class MainWin
     Public GrisouHealth, PlayerHealth, PlayerDefense, GrisouDefense As Integer
     Public GameState As Boolean
     Public GrisouTextA, PlayerTextA As String
     Public TurnValue As Integer
+    Public FailSafe As Boolean
+    Public Choice, LastChoice As Integer
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
         PlayerHealth = 50 : GrisouHealth = 50 : PlayerDefense = 0 : GrisouDefense = 0
         'Setting up Grisou text
@@ -50,36 +53,19 @@ Public Class MainWin
     End Sub
     'Grisou AI yes we made a cat intelligent
     Public Sub GrisouAI()
-        Dim LastChoice As Integer 'last choice so she cannot spam
-        Static Dim Choice As Integer ' current choice
-        Choice = GetRandom(1, 3)
-        If (Choice = LastChoice) Then 'if she chose the same cancel
-            GrisouAI()
-        ElseIf (LastChoice = Nothing) Then ' if she never played before
-            Select Case Choice 'check grisou choice
-                Case 1 'grisou chose attack
-                    LastChoice = Choice
-                    GameEngine(2, 1, "A")
-                Case 2 'grisou chose defense
-                    LastChoice = Choice
-                    GameEngine(2, 1, "D")
-                Case 3 ' grisou chose recovery
-                    LastChoice = Choice
-                    GameEngine(2, 1, "R")
-            End Select
-        Else 'if the choice is not her first turn and not the same
-            Select Case Choice 'check grisou choice
-                Case 1 'grisou chose attack
-                    LastChoice = Choice
-                    GameEngine(2, 1, "A")
-                Case 2 'grisou chose defense
-                    LastChoice = Choice
-                    GameEngine(2, 1, "D")
-                Case 3 ' grisou chose recovery
-                    LastChoice = Choice
-                    GameEngine(2, 1, "R")
-            End Select
-        End If
+        Choice = Nothing
+        Do Until (Choice = Not LastChoice) 'Do loop until i get a difference
+            Choice = GetRandom(1, 3)
+        Loop
+        Select Case Choice 'check grisou choice
+            Case 1 'grisou chose attack
+                GameEngine(2, 1, "A")
+            Case 2 'grisou chose defense
+                GameEngine(2, 1, "D")
+            Case 3 ' grisou chose recovery
+                GameEngine(2, 1, "R")
+        End Select
+        LastChoice = Choice
     End Sub
     'New Processing Script
     'Caster 1= player  2=Grisou
