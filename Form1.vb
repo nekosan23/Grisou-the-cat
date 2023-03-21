@@ -42,165 +42,58 @@ Public Class MainWin
             Choice = GetRandom(1, 3)
         Loop
         Select Case Choice 'check grisou choice
-            Case 1 'grisou chose attack
-                GameEngine(2, 1, "A")
-            Case 2 'grisou chose defense
-                GameEngine(2, 1, "D")
-            Case 3 ' grisou chose recovery
-                GameEngine(2, 1, "R")
+            Case 1 'grisou choose attack
+                GameLogic(2, "A")
+            Case 2 'grisou choose defense
+                GameLogic(2, "D")
+            Case 3 ' grisou choose recovery
+                GameLogic(2, "R")
         End Select
         LastChoice = Choice
     End Sub
-    'New Processing Script
-    'Caster 1= player  2=Grisou
-    'Target 1= player  2=Grisou
-    'TypeOfAttack A = Attack  D = Defense  R= Recovery
-    Public Sub GameEngine(ByVal Caster As Integer, ByVal Target As Integer, ByVal TypeOfAttack As String)
-        'setting variable for attack
-        Static Dim Container1 As Integer
-        Static Dim AttackLow = New Integer() {1, 2, 3, 4}
-        Static Dim AttackMedium = New Integer() {7, 9, 11, 12}
-        Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
-        'setting variable for defense
-        Static Dim Defense = New Integer() {6, 8, 12, 13}
-        'setting variable for recovery
-        Static Dim Recovery = New Integer() {5, 10, 15, 18}
-        Select Case TypeOfAttack
-            Case "A" 'Attack script
-                Container1 = GetRandom(1, 4) 'get attack failed , low , medium , high
-                Select Case Container1 'check Attack strengh
-                    Case 1 'missed
-                        If (Target = 1) Then 'Grisou missed
-                            DataProcessor(1, 0, "A")
-                        Else 'player missed
-                            DataProcessor(2, 0, "A")
-                        End If
-                    Case 2 'Low hit
-                        Container1 = GetRandom(1, 4)
-                        If (Target = 1) Then 'Grisou attack low
-                            DataProcessor(1, AttackLow(Container1), "A")
-                        Else 'player attack low
-                            DataProcessor(2, AttackLow(Container1), "A")
-                        End If
-                    Case 3 'Medium hit
-                        Container1 = GetRandom(1, 4)
-                        If (Target = 1) Then 'Grisou attack medium
-                            DataProcessor(1, AttackMedium(Container1), "A")
-                        Else 'player attack medium
-                            DataProcessor(2, AttackMedium(Container1), "A")
-                        End If
-                    Case 4 'high hit
-                        Container1 = GetRandom(1, 4)
-                        If (Target = 1) Then 'Grisou attack high
-                            DataProcessor(1, AttackHigh(Container1), "A")
-                        Else 'player attack high
-                            DataProcessor(2, AttackHigh(Container1), "A")
-                        End If
-                End Select
-            Case "D" 'Defense script
-                Container1 = GetRandom(1, 4) ' get defense amount
-                Select Case Caster
-                    Case "1" 'player casted defense
-                        DataProcessor(1, Defense(Container1), "D")
-                    Case "2" 'grisou casted defense
-                        DataProcessor(2, Defense(Container1), "D")
-                End Select
-            Case "R" 'Recovery script
-                Container1 = GetRandom(1, 4) 'get recovery amount
-                Select Case Caster
-                    Case "1" 'player casted recovery
-                        DataProcessor("1", Recovery(Container1), "R")
-                    Case "2" ' grisou casted recovery
-                        DataProcessor("2", Recovery(Container1), "R")
-                End Select
-        End Select
-
-    End Sub
-    'process Value
-    'don't forget to ship target, value, type of attack
-    Public Sub DataProcessor(ByVal Target As Integer, ByVal Amount As Integer, ByVal Type As String)
-        Static Dim container1 As Integer 'contain advance math result
-        Select Case Target
-            Case 1 'target player
-                Select Case Type
-
-                    Case "A" 'grisou attack player
-                        If (Amount = 0) Then 'check if missed
-                            Task.WaitAll(Announcer(My.Settings.GAM1.ToString))
-                            GameUpdate()
-                        Else
-                            Select Case PlayerDefense ' checking defense
-                                Case >= Amount ' defense is higher then attack
-                                    Task.WaitAll(Announcer(My.Settings.PDH1.ToString))
-                                    GameUpdate()
-                                Case < Amount 'defense is there but lower
-                                    container1 = Amount - PlayerDefense
-                                    PlayerHealth -= container1
-                                    Task.WaitAll(Announcer(My.Settings.PDL1.ToString + container1.ToString + My.Settings.DAM.ToString))
-                                    GameUpdate()
-                                Case = 0 'no defense
-                                    PlayerHealth -= Amount
-                                    Task.WaitAll(Announcer(My.Settings.GA1.ToString + Amount.ToString + My.Settings.DAM.ToString))
-                                    GameUpdate()
-                            End Select
-                        End If
-                    Case "D" 'player Casted Defense
-                        PlayerDefense += Amount
-                        Task.WaitAll(Announcer(My.Settings.PDC1.ToString + Amount.ToString + My.Settings.D1.ToString))
-                        GameUpdate()
-                    Case "R" 'player casted recovery
-                        PlayerHealth += Amount
-                        Task.WaitAll(Announcer(My.Settings.PR1.ToString + Amount.ToString + My.Settings.R1.ToString))
-                        GameUpdate()
-                End Select
-            Case 2 'target grisou
-                Select Case Type
-                    Case "A"
-                        If (Amount = 0) Then 'check if missed
-                            Task.WaitAll(Announcer(My.Settings.PAM1.ToString))
-                            GameUpdate()
-                        Else
-                            Select Case GrisouDefense ' checking defense
-                                Case >= Amount ' defense is higher then attack
-                                    Task.WaitAll(Announcer(My.Settings.GDH1.ToString))
-                                    GameUpdate()
-                                Case < Amount 'defense is there but lower
-                                    container1 = Amount - GrisouDefense
-                                    GrisouHealth -= container1
-                                    Task.WaitAll(Announcer(My.Settings.GDL1.ToString + container1.ToString + My.Settings.DAM.ToString))
-                                    GameUpdate()
-                                Case = 0 'no defense
-                                    GrisouHealth -= Amount
-                                    Task.WaitAll(Announcer(My.Settings.PA1.ToString + Amount.ToString + My.Settings.DAM.ToString))
-                                    GameUpdate()
-                            End Select
-                        End If
-                    Case "D" 'grisou casted defense
-                        GrisouDefense += Amount
-                        Task.WaitAll(Announcer(My.Settings.GDC1.ToString + Amount.ToString + My.Settings.D1.ToString))
-                        GameUpdate()
-                    Case "R" 'grisou casted recovery
-                        GrisouHealth += Amount
-                        Task.WaitAll(Announcer(My.Settings.GR1.ToString + Amount.ToString + My.Settings.R1.ToString))
-                        GameUpdate()
-                End Select
-        End Select
-    End Sub
-    'GameUpdate
-    'update everything and check for death
-    Public Sub GameUpdate()
-        'everything is in GameLogic
-    End Sub
     'Game Engine V2
     'this is my attempt at fusing GameOver, GameUpdate, Dataprocessor and GameEngine
-    Public Sub GameLogic(ByVal Caster As Integer, ByVal Target As Integer, ByVal TypeOfAttack As String)
+    'Caster 1= player  2=Grisou
+    'TypeOfAttack A = Attack  D = Defense  R= Recovery
+    Public Sub GameLogic(ByVal Caster As Integer, ByVal TypeOfAttack As String)
         'setting all the variables
-        Static Dim Container1 As Integer
+        Static Dim Strength, AttackValue, DefenseValue, RecoveryValue As Integer
         Static Dim AttackLow = New Integer() {1, 2, 3, 4}
         Static Dim AttackMedium = New Integer() {7, 9, 11, 12}
         Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
         Static Dim Defense = New Integer() {6, 8, 12, 13}
         Static Dim Recovery = New Integer() {5, 10, 15, 18}
+        Select Case TypeOfAttack
+            Case "A" 'Attack
+                Strength = GetRandom(1, 4)
+                Select Case Strength
+                    Case 1 'missed
+                        AttackValue = 0 : Exit Select
+                    Case 2 'Low
+                        Strength = GetRandom(1, 4)
+                        AttackValue = AttackLow(Strength) : Exit Select
+                    Case 3 'Medium
+                        Strength = GetRandom(1, 4)
+                        AttackValue = AttackMedium(Strength) : Exit Select
+                    Case 4 'High
+                        Strength = GetRandom(1, 4)
+                        AttackValue = AttackHigh(Strength) : Exit Select
+                End Select
+            Case "D" 'Defense
+                Strength = GetRandom(1, 4)
+                DefenseValue = Defense(Strength) : Exit Select
+            Case "R" 'Recovery
+                Strength = GetRandom(1, 4)
+                RecoveryValue = Recovery(Strength) : Exit Select
+        End Select
+        Select Case Caster 'check the caster and start the math make sure to set null value to 0 
+            Case 1 'You Cast
+                If (DefenseValue = 0) Then
+
+                End If
+            Case 2 'Grisou Cast
+
+        End Select
         'Checking if someone died and updating UI
         PlayerText2.Text = PlayerHealth.ToString + " / 50" : GrisouText2.Text = GrisouHealth.ToString + " / 50"
         PlayerDefenseText.Text = PlayerDefense.ToString : GrisouDefenseText.Text = GrisouDefense.ToString
@@ -221,6 +114,9 @@ Public Class MainWin
             Case < 50 'under 50
                 GrisouHealthBar.Value = GrisouHealth
         End Select
+        'refresh everything
+        PlayerText1.Refresh() : PlayerText2.Refresh() : PlayerHealthBar.Refresh() : PlayerDefenseText.Refresh()
+        GrisouText1.Refresh() : GrisouText2.Refresh() : GrisouHealthBar.Refresh() : GrisouDefenseText.Refresh()
         'death check
         If (PlayerHealth <= 0) Then
             'You died
@@ -259,13 +155,13 @@ Public Class MainWin
         Return Generator.Next(Min, Max)
     End Function
     Private Sub PlayerAttackClick(sender As Object, e As EventArgs) Handles PlayerAction1.Click
-        DisablePlayerButton() : GameEngine(1, 2, "A")
+        DisablePlayerButton() : GameLogic(1, "A")
     End Sub
     Private Sub PlayerDefenseClick(sender As Object, e As EventArgs) Handles PlayerAction2.Click
-        DisablePlayerButton() : GameEngine(1, 2, "D")
+        DisablePlayerButton() : GameLogic(1, "D")
     End Sub
     Private Sub PlayerRecoverClick(sender As Object, e As EventArgs) Handles PlayerAction3.Click
-        DisablePlayerButton() : GameEngine(1, 2, "R")
+        DisablePlayerButton() : GameLogic(1, "R")
     End Sub
     'Below is fast code for saving space
     Public Sub DisablePlayerButton()
