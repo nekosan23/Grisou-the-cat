@@ -88,9 +88,7 @@ Public Class MainWin
         End Select
         Select Case Caster 'check the caster and start the math make sure to set null value to 0 
             Case 1 'You Cast
-                If (DefenseValue = 0) Then
 
-                End If
             Case 2 'Grisou Cast
 
         End Select
@@ -122,16 +120,19 @@ Public Class MainWin
             'You died
             DisablePlayerButton()
             Task.WaitAll(Announcer("You died! Game Over"))
-        Else
-            Round()
         End If
         If (GrisouHealth <= 0) Then
             'Grisou died
             DisablePlayerButton()
             Task.WaitAll(Announcer("Grisou died you win !!"))
-        Else
-            Round()
         End If
+        Select Case TurnValue 'Checking and changing the turn and sending back to round()
+            Case 1
+                TurnValue = 2
+            Case 2
+                TurnValue = 1
+        End Select
+        Round()
     End Sub
     'Announcer
     Public Async Function Announcer(text As String) As Task
