@@ -88,9 +88,9 @@ Public Class MainWin
         End Select
         Select Case Caster 'check the caster and start the math make sure to set null value to 0 
             Case 1 'You Cast
-
+                'good luck myself with all the math that need to be here
             Case 2 'Grisou Cast
-
+                'good luck myself with all the math that need to be here
         End Select
         'Checking if someone died and updating UI
         PlayerText2.Text = PlayerHealth.ToString + " / 50" : GrisouText2.Text = GrisouHealth.ToString + " / 50"
@@ -128,9 +128,9 @@ Public Class MainWin
         End If
         Select Case TurnValue 'Checking and changing the turn and sending back to round()
             Case 1
-                TurnValue = 2
+                TurnValue = 2 : Exit Select
             Case 2
-                TurnValue = 1
+                TurnValue = 1 : Exit Select
         End Select
         Round()
     End Sub
