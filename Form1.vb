@@ -17,7 +17,7 @@ Public Class MainWin
         GameState = True
         Round()
     End Sub
-    'Round system need to be active at any time or else game break
+    'Round system
     Public Sub Round()
         If (GameState = True) Then
             TurnValue = GetRandom(1, 2)
@@ -265,13 +265,9 @@ Public Class MainWin
     End Sub
     'Below is fast code for saving space
     Public Sub DisablePlayerButton()
-        PlayerAction1.Enabled = False
-        PlayerAction2.Enabled = False
-        PlayerAction3.Enabled = False
+        PlayerAction1.Enabled = False : PlayerAction2.Enabled = False : PlayerAction3.Enabled = False
     End Sub
     Public Sub EnablePlayerButton()
-        PlayerAction1.Enabled = True
-        PlayerAction2.Enabled = True
-        PlayerAction3.Enabled = True
+        PlayerAction1.Enabled = True : PlayerAction2.Enabled = True : PlayerAction3.Enabled = True
     End Sub
 End Class
