@@ -21,6 +21,7 @@ Public Class MainWin
     Public Sub Round()
         If (GameState = True) Then
             TurnValue = GetRandom(1, 2)
+            GameState = False
         End If
         Select Case TurnValue
             Case 1
@@ -37,7 +38,7 @@ Public Class MainWin
     'Grisou AI yes we made a cat intelligent
     Public Sub GrisouAI()
         Choice = Nothing
-        Do Until (Choice = Not LastChoice) 'Do loop until i get a difference
+        Do Until (Choice = Not LastChoice And Choice = Not Nothing) 'Do loop until i get a difference
             Choice = GetRandom(1, 3)
         Loop
         Select Case Choice 'check grisou choice
@@ -188,8 +189,22 @@ Public Class MainWin
     'GameUpdate
     'update everything and check for death
     Public Sub GameUpdate()
-        'updating player info
-        PlayerText2.Text = PlayerHealth.ToString + " / 50"
+        'everything is in GameLogic
+    End Sub
+    'Game Engine V2
+    'this is my attempt at fusing GameOver, GameUpdate, Dataprocessor and GameEngine
+    Public Sub GameLogic(ByVal Caster As Integer, ByVal Target As Integer, ByVal TypeOfAttack As String)
+        'setting all the variables
+        Static Dim Container1 As Integer
+        Static Dim AttackLow = New Integer() {1, 2, 3, 4}
+        Static Dim AttackMedium = New Integer() {7, 9, 11, 12}
+        Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
+        Static Dim Defense = New Integer() {6, 8, 12, 13}
+        Static Dim Recovery = New Integer() {5, 10, 15, 18}
+        'Checking if someone died and updating UI
+        PlayerText2.Text = PlayerHealth.ToString + " / 50" : GrisouText2.Text = GrisouHealth.ToString + " / 50"
+        PlayerDefenseText.Text = PlayerDefense.ToString : GrisouDefenseText.Text = GrisouDefense.ToString
+        'updating ProgressBar and checking for overflow to prevent OverFlowException
         Select Case PlayerHealth
             Case <= 0 'digit is 0 or lower
                 PlayerHealthBar.Value = 0
@@ -198,9 +213,6 @@ Public Class MainWin
             Case < 50 'under 50
                 PlayerHealthBar.Value = PlayerHealth
         End Select
-        PlayerDefenseText.Text = PlayerDefense.ToString
-        'updating grisou info
-        GrisouText2.Text = GrisouHealth.ToString + " / 50"
         Select Case GrisouHealth
             Case <= 0 'digit is 0 or lower
                 GrisouHealthBar.Value = 0
@@ -209,28 +221,20 @@ Public Class MainWin
             Case < 50 'under 50
                 GrisouHealthBar.Value = GrisouHealth
         End Select
-        GrisouDefenseText.Text = GrisouDefense.ToString
-        If (PlayerHealth <= 0) Then 'check if player died
-            Gameover(1)
-        Else
-            Round()
-        End If
-        If (GrisouHealth <= 0) Then 'check if grisou died
-            Gameover(2)
-        Else
-            Round()
-        End If
-    End Sub
-    'game over call this whenever somebody die
-    Public Sub Gameover(ByVal user As Integer)
-        If (user = 1) Then
-            'Player failed
+        'death check
+        If (PlayerHealth <= 0) Then
+            'You died
             DisablePlayerButton()
             Task.WaitAll(Announcer("You died! Game Over"))
-        ElseIf (user = 2) Then
-            'Grisou failed
+        Else
+            Round()
+        End If
+        If (GrisouHealth <= 0) Then
+            'Grisou died
             DisablePlayerButton()
             Task.WaitAll(Announcer("Grisou died you win !!"))
+        Else
+            Round()
         End If
     End Sub
     'Announcer
