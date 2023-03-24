@@ -18,20 +18,22 @@ Public Class MainWin
         Round()
     End Sub
     'Round system
-    Public Sub Round()
+    Public Async Sub Round()
         If (GameState = True) Then
             TurnValue = GetRandom(1, 2)
             GameState = False
         End If
         Select Case TurnValue
             Case 1
-                'player is starting
+                'Player is starting
                 EnablePlayerButton()
-                Task.WaitAll(Announcer(PlayerTextA)) : Console.WriteLine("first game announcer")
+                Await AnnouncerAsync(PlayerTextA)
+                Console.WriteLine("first game announcer")
             Case 2
                 'Grisou is starting
                 DisablePlayerButton()
-                Task.WaitAll(Announcer(GrisouTextA)) : Console.WriteLine("grisou turn")
+                Await AnnouncerAsync(GrisouTextA)
+                Console.WriteLine("grisou turn")
                 GrisouAI()
         End Select
     End Sub
@@ -119,12 +121,12 @@ Public Class MainWin
         If (PlayerHealth <= 0) Then
             'You died
             DisablePlayerButton()
-            Task.WaitAll(Announcer("You died! Game Over"))
+            'Task.WaitAll(Announcer("You died! Game Over"))
         End If
         If (GrisouHealth <= 0) Then
             'Grisou died
             DisablePlayerButton()
-            Task.WaitAll(Announcer("Grisou died you win !!"))
+            'Task.WaitAll(Announcer("Grisou died you win !!"))
         End If
         Select Case TurnValue 'Checking and changing the turn and sending back to round()
             Case 1
@@ -135,20 +137,19 @@ Public Class MainWin
         Round()
     End Sub
     'Announcer
-    Public Async Function Announcer(text As String) As Task
-        'Dim animationcountdown As Integer = -490
-        'AnnouncerText.Text = text
-        'AnnouncerText.Visible = True
-        'AnnouncerPanel.Visible = True
-        ' Do
-        'AnnouncerPanel.Location = New Point(animationcountdown, 292)
-        'animationcountdown += 10
-        'Sleep(10)
-        'Loop Until animationcountdown = 10
-        'AnnouncerText.Refresh()
-        'AnnouncerText.Visible = False
-        'AnnouncerPanel.Visible = False
-        Console.WriteLine(text)
+    Public Async Function AnnouncerAsync(text As String) As Task
+        Dim animationcountdown As Integer = -490
+        AnnouncerText.Text = text
+        AnnouncerText.Visible = True
+        AnnouncerPanel.Visible = True
+        Do
+            AnnouncerPanel.Location = New Point(animationcountdown, 292)
+            animationcountdown += 10
+            Await Task.Delay(10)
+        Loop Until animationcountdown = 10
+        AnnouncerText.Refresh()
+        AnnouncerText.Visible = False
+        AnnouncerPanel.Visible = False
     End Function
     'Random Generator for integer
     Public Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer
