@@ -15,6 +15,7 @@ Public Class MainWin
         PlayerHealthBar.Value = PlayerHealth : PlayerText1.Text = "Master" : PlayerText2.Text = PlayerHealth.ToString + " / 50" : PlayerDefenseText.Text = PlayerDefense.ToString : PlayerTextA = "Master turn !"
         AnnouncerPanel.Visible = False : AnnouncerText.Visible = False
         GameState = True
+        LastChoice = Nothing
         Round()
     End Sub
     'Round system
@@ -28,7 +29,7 @@ Public Class MainWin
                 'Player is starting
                 EnablePlayerButton()
                 Await AnnouncerAsync(PlayerTextA)
-                Console.WriteLine("first game announcer")
+                Console.WriteLine("player turn")
             Case 2
                 'Grisou is starting
                 DisablePlayerButton()
@@ -38,12 +39,11 @@ Public Class MainWin
         End Select
     End Sub
     'Grisou AI yes we made a cat intelligent
-    Public Sub GrisouAI()
-        Choice = Nothing
-        Do Until (Choice = Not LastChoice And Choice = Not Nothing) 'Do loop until i get a difference
-            Choice = GetRandom(1, 3)
-        Loop
-        Select Case Choice 'check grisou choice
+    Public Async Sub GrisouAI()
+        Dim choice As Integer = Await GetRandomAI(1, 3, LastChoice)
+        Console.WriteLine("Grisou chooses: " & choice)
+
+        Select Case choice
             Case 1 'grisou choose attack
                 GameLogic(2, "A")
             Case 2 'grisou choose defense
@@ -51,7 +51,8 @@ Public Class MainWin
             Case 3 ' grisou choose recovery
                 GameLogic(2, "R")
         End Select
-        LastChoice = Choice
+
+        LastChoice = choice
     End Sub
     'Game Engine V2
     'this is my attempt at fusing GameOver, GameUpdate, Dataprocessor and GameEngine
@@ -65,34 +66,42 @@ Public Class MainWin
         Static Dim AttackHigh = New Integer() {16, 17, 19, 20}
         Static Dim Defense = New Integer() {6, 8, 12, 13}
         Static Dim Recovery = New Integer() {5, 10, 15, 18}
+        AttackValue = 0 : DefenseValue = 0 : RecoveryValue = 0
         Select Case TypeOfAttack
             Case "A" 'Attack
-                Strength = GetRandom(1, 4)
+                Strength = GetRandom(1, 3)
                 Select Case Strength
                     Case 1 'missed
                         AttackValue = 0 : Exit Select
                     Case 2 'Low
-                        Strength = GetRandom(1, 4)
+                        Strength = GetRandom(1, 3)
                         AttackValue = AttackLow(Strength) : Exit Select
                     Case 3 'Medium
-                        Strength = GetRandom(1, 4)
+                        Strength = GetRandom(1, 3)
                         AttackValue = AttackMedium(Strength) : Exit Select
                     Case 4 'High
-                        Strength = GetRandom(1, 4)
+                        Strength = GetRandom(1, 3)
                         AttackValue = AttackHigh(Strength) : Exit Select
                 End Select
             Case "D" 'Defense
-                Strength = GetRandom(1, 4)
+                Strength = GetRandom(1, 3)
                 DefenseValue = Defense(Strength) : Exit Select
             Case "R" 'Recovery
-                Strength = GetRandom(1, 4)
+                Strength = GetRandom(1, 3)
                 RecoveryValue = Recovery(Strength) : Exit Select
         End Select
+        Console.WriteLine(AttackValue.ToString + " # " + DefenseValue.ToString + " # " + RecoveryValue.ToString)
         Select Case Caster 'check the caster and start the math make sure to set null value to 0 
             Case 1 'You Cast
-                'good luck myself with all the math that need to be here
+                If AttackValue - DefenseValue >= 0 Then
+                    GrisouHealth -= AttackValue - DefenseValue
+                End If
+                PlayerHealth += RecoveryValue
             Case 2 'Grisou Cast
-                'good luck myself with all the math that need to be here
+                If AttackValue - DefenseValue >= 0 Then
+                    PlayerHealth -= AttackValue - DefenseValue
+                End If
+                GrisouHealth += RecoveryValue
         End Select
         'Checking if someone died and updating UI
         PlayerText2.Text = PlayerHealth.ToString + " / 50" : GrisouText2.Text = GrisouHealth.ToString + " / 50"
@@ -121,7 +130,7 @@ Public Class MainWin
         If (PlayerHealth <= 0) Then
             'You died
             DisablePlayerButton()
-            'Task.WaitAll(Announcer("You died! Game Over"))
+            'AnnouncerAsync("You died! Game Over")
         End If
         If (GrisouHealth <= 0) Then
             'Grisou died
@@ -145,16 +154,25 @@ Public Class MainWin
         Do
             AnnouncerPanel.Location = New Point(animationcountdown, 292)
             animationcountdown += 10
-            Await Task.Delay(10)
+            Await Task.Delay(35)
         Loop Until animationcountdown = 10
         AnnouncerText.Refresh()
+        Await Task.Delay(2000)
         AnnouncerText.Visible = False
         AnnouncerPanel.Visible = False
     End Function
     'Random Generator for integer
     Public Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer
         Static Generator As System.Random = New System.Random
-        Return Generator.Next(Min, Max)
+        Return Generator.Next(Min, Max + 1)
+    End Function
+    Public Async Function GetRandomAI(ByVal min As Integer, ByVal max As Integer, ByVal lastChoice As Integer) As Task(Of Integer)
+        Dim random As New Random()
+        Dim choice As Integer
+        Do
+            choice = random.Next(min, max + 1)
+        Loop While choice = lastChoice
+        Return choice
     End Function
     Private Sub PlayerAttackClick(sender As Object, e As EventArgs) Handles PlayerAction1.Click
         DisablePlayerButton() : GameLogic(1, "A")
