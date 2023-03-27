@@ -46,3 +46,16 @@ E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.CoreCompileI
 E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.exe
 E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.xml
 E:\pc\desktop\grisou\Grisou-the-cat\obj\Debug\Grisou the cat.pdb
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\bin\Debug\Grisou the cat.exe.config
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\bin\Debug\Grisou the cat.exe
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\bin\Debug\Grisou the cat.pdb
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\bin\Debug\Grisou the cat.xml
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.AssemblyReference.cache
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.SuggestedBindingRedirects.cache
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\WindowsApp2.MainWin.resources
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\WindowsApp2.Resources.resources
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.GenerateResource.cache
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.vbproj.CoreCompileInputs.cache
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.exe
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.xml
+C:\Users\quint\Documents\GitHub\Grisou-the-cat\obj\Debug\Grisou the cat.pdb
