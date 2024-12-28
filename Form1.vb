@@ -1,12 +1,9 @@
 ﻿Imports System.Threading.Thread
 
 Public Class MainWin
-    Public GrisouHealth, PlayerHealth, PlayerDefense, GrisouDefense As Integer
-    Public GameState As Boolean
+    Public GrisouHealth, PlayerHealth, PlayerDefense, GrisouDefense, TurnValue, Choice, LastChoice As Integer
+    Public GameState, FailSafe As Boolean
     Public GrisouTextA, PlayerTextA As String
-    Public TurnValue As Integer
-    Public FailSafe As Boolean
-    Public Choice, LastChoice As Integer
     Public Sub Startup(sender As Object, e As EventArgs) Handles MyBase.Load
         PlayerHealth = 50 : GrisouHealth = 50 : PlayerDefense = 0 : GrisouDefense = 0
         'Setting up Grisou text
@@ -14,8 +11,8 @@ Public Class MainWin
         'Setting up Player text
         PlayerHealthBar.Value = PlayerHealth : PlayerText1.Text = "Master" : PlayerText2.Text = PlayerHealth.ToString + " / 50" : PlayerDefenseText.Text = PlayerDefense.ToString : PlayerTextA = "Master turn !"
         AnnouncerPanel.Visible = False : AnnouncerText.Visible = False
-        GameState = True
-        LastChoice = Nothing
+        'Setting GameState and making sure LastChoice is clear
+        GameState = True : LastChoice = Nothing
         Round()
     End Sub
     'Round system
@@ -51,8 +48,6 @@ Public Class MainWin
             Case 3 ' grisou choose recovery
                 GameLogic(2, "R")
         End Select
-
-        LastChoice = choice
     End Sub
     'Game Engine V2
     'this is my attempt at fusing GameOver, GameUpdate, Dataprocessor and GameEngine
@@ -91,17 +86,51 @@ Public Class MainWin
                 RecoveryValue = Recovery(Strength) : Exit Select
         End Select
         Console.WriteLine(AttackValue.ToString + " # " + DefenseValue.ToString + " # " + RecoveryValue.ToString)
+
         Select Case Caster 'check the caster and start the math make sure to set null value to 0 
             Case 1 'You Cast
-                If AttackValue - DefenseValue >= 0 Then
-                    GrisouHealth -= AttackValue - DefenseValue
-                End If
-                PlayerHealth += RecoveryValue
+                'check TypeOfAttack
+                Select Case TypeOfAttack
+                    Case "A"
+                        If AttackValue - DefenseValue >= 0 Then
+                            'fix above if statement
+                            GrisouHealth -= AttackValue - DefenseValue
+                        End If
+                        Exit Select
+                    Case "R"
+                        If PlayerHealth + RecoveryValue < 50 Then
+                            PlayerHealth += RecoveryValue
+                        End If
+                        Exit Select
+                    Case "D"
+                        If DefenseValue > 50 Then
+                            PlayerDefense = 50
+                        Else
+                            PlayerDefense += DefenseValue
+                        End If
+                        Exit Select
+                End Select
             Case 2 'Grisou Cast
-                If AttackValue - DefenseValue >= 0 Then
-                    PlayerHealth -= AttackValue - DefenseValue
-                End If
-                GrisouHealth += RecoveryValue
+                'check TypeOfAttack
+                Select Case TypeOfAttack
+                    Case "A"
+                        If AttackValue - DefenseValue >= 0 Then
+                            PlayerHealth -= AttackValue - DefenseValue
+                        End If
+                        Exit Select
+                    Case "R"
+                        If GrisouHealth + RecoveryValue < 50 Then
+                            GrisouHealth += RecoveryValue
+                        End If
+                        Exit Select
+                    Case "D"
+                        If DefenseValue > 50 Then
+                            GrisouDefense = 50
+                        Else
+                            GrisouDefense += DefenseValue
+                        End If
+                        Exit Select
+                End Select
         End Select
         'Checking if someone died and updating UI
         PlayerText2.Text = PlayerHealth.ToString + " / 50" : GrisouText2.Text = GrisouHealth.ToString + " / 50"
@@ -148,9 +177,7 @@ Public Class MainWin
     'Announcer
     Public Async Function AnnouncerAsync(text As String) As Task
         Dim animationcountdown As Integer = -490
-        AnnouncerText.Text = text
-        AnnouncerText.Visible = True
-        AnnouncerPanel.Visible = True
+        AnnouncerText.Text = text : AnnouncerText.Visible = True : AnnouncerPanel.Visible = True
         Do
             AnnouncerPanel.Location = New Point(animationcountdown, 292)
             animationcountdown += 10
@@ -158,8 +185,7 @@ Public Class MainWin
         Loop Until animationcountdown = 10
         AnnouncerText.Refresh()
         Await Task.Delay(2000)
-        AnnouncerText.Visible = False
-        AnnouncerPanel.Visible = False
+        AnnouncerText.Visible = False : AnnouncerPanel.Visible = False
     End Function
     'Random Generator for integer
     Public Function GetRandom(ByVal Min As Integer, ByVal Max As Integer) As Integer
@@ -167,11 +193,21 @@ Public Class MainWin
         Return Generator.Next(Min, Max + 1)
     End Function
     Public Async Function GetRandomAI(ByVal min As Integer, ByVal max As Integer, ByVal lastChoice As Integer) As Task(Of Integer)
-        Dim random As New Random()
-        Dim choice As Integer
-        Do
-            choice = random.Next(min, max + 1)
-        Loop While choice = lastChoice
+        Dim choice, StaticAIHolder As Integer
+        Dim PickTable = New List(Of Integer) From {1, 2, 3}
+        If lastChoice = Nothing Then
+            choice = GetRandom(min, max) : lastChoice = choice
+        Else
+            If StaticAIHolder = Nothing Then
+                PickTable.Remove(lastChoice)
+                choice = GetRandom(min, PickTable.Count)
+                StaticAIHolder = lastChoice
+            Else
+                PickTable.Add(StaticAIHolder)
+                choice = GetRandom(min, PickTable.Count)
+            End If
+
+        End If
         Return choice
     End Function
     Private Sub PlayerAttackClick(sender As Object, e As EventArgs) Handles PlayerAction1.Click

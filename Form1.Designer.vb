@@ -239,7 +239,7 @@ Partial Class MainWin
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "MainWin"
-        Me.Text = "Jeux de merde a sam"
+        Me.Text = "Grisou The Cat"
         Me.MainDisplay.ResumeLayout(False)
         Me.AnnouncerPanel.ResumeLayout(False)
         Me.AnnouncerPanel.PerformLayout()
